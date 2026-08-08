@@ -1,0 +1,1834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Design Pipeline</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Contemporary Apple/Google Canvas Palette */
+            --bg-color: #FFFFFF; 
+            --bg-alt: #FCFCFC;
+            --text-main: #1C1C1B; 
+            --text-muted: #5F6368; 
+            --text-light: #9AA0A6;
+            --border-subtle: #F1F3F4;
+            --border-medium: #E8EAED;
+            --border-dark: #202124;
+            
+            /* Restrained Semantic Colour System */
+            --color-skills: #1A73E8;      /* Blue */
+            --color-agents: #EA4335;      /* Warm Coral / Red */
+            --color-phases: #FBBC04;      /* Warm Yellow */
+            --color-human: #34A853;       /* Green */
+            --color-orchestrator: #8E24AA;/* Violet / Purple */
+
+            /* Disciplined Spacing Scale */
+            --space-3xs: 0.25rem;
+            --space-2xs: 0.5rem;
+            --space-xs: 0.75rem;
+            --space-sm: 1.25rem;
+            --space-md: 2.25rem;
+            --space-lg: 3.5rem;
+            --space-xl: 5.5rem;
+            --space-xxl: 8.5rem;
+
+            /* Header Heights for Stacking */
+            --global-header-height: 48px;
+            --sticky-intro-height: 64px;
+
+            /* Typography */
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            
+            /* Animation Curves */
+            --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-fast: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            
+            /* Layout Containers */
+            --content-width: 1140px;
+            --wide-content-width: 1400px;
+            --text-max-width: 38rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 16px;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* TYPOGRAPHY SYSTEM */
+        h1 {
+            font-size: clamp(3.25rem, 6vw, 5.5rem);
+            font-weight: 300;
+            line-height: 1.05;
+            letter-spacing: -0.035em;
+            margin-bottom: var(--space-xs);
+        }
+
+        h2.section-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        
+        h2.section-label::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--text-main);
+        }
+
+        h3 {
+            font-size: clamp(1.85rem, 3vw, 2.5rem);
+            font-weight: 300;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-2xs);
+        }
+
+        p {
+            font-size: clamp(1.05rem, 1.25vw, 1.2rem);
+            color: var(--text-muted);
+            max-width: var(--text-max-width);
+            margin-bottom: var(--space-2xs);
+            line-height: 1.6;
+        }
+
+        .lead {
+            font-size: clamp(1.35rem, 2vw, 1.75rem);
+            color: var(--text-main);
+            font-weight: 400;
+            line-height: 1.35;
+            letter-spacing: -0.015em;
+            max-width: 38rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .mono {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        /* SVG ICONS */
+        .icon {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            display: inline-block;
+            vertical-align: middle;
+            transition: transform var(--transition-fast);
+        }
+
+        /* LAYOUT & CONTAINERS */
+        .container {
+            width: 100%;
+            max-width: var(--content-width);
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        .container-wide {
+            width: 100%;
+            max-width: var(--wide-content-width);
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        .chapter-section {
+            padding: var(--space-xl) 0;
+            position: relative;
+        }
+
+        .chapter-break-line {
+            width: 100%;
+            height: 1px;
+            background-color: var(--border-subtle);
+            margin: 0;
+        }
+
+        /* HEADER NAVIGATION */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--global-header-height);
+            padding: 0 var(--space-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid transparent;
+            transition: border-bottom 0.3s ease;
+        }
+
+        header.scrolled {
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .nav-left {
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 0.02em;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-logo-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--color-skills);
+        }
+
+        .nav-right-context {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: opacity 0.3s ease;
+        }
+
+        /* FIXED VERTICAL PRESENTATION NAVIGATOR */
+        .vertical-nav {
+            position: fixed;
+            right: var(--space-md);
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            z-index: 900;
+        }
+
+        .vnav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+            outline: none;
+        }
+
+        .vnav-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--text-light);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .vnav-line {
+            width: 1px;
+            height: 12px;
+            background-color: var(--border-subtle);
+            pointer-events: none;
+        }
+
+        .vnav-item.active .vnav-dot {
+            background-color: var(--color-skills);
+            transform: scale(1.5);
+        }
+
+        .vnav-item:hover .vnav-dot {
+            background-color: var(--text-main);
+            transform: scale(1.3);
+        }
+
+        .vnav-label {
+            position: absolute;
+            right: 24px;
+            white-space: nowrap;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            padding: 3px 8px;
+            border: 1px solid var(--border-subtle);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(6px);
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .vnav-item:hover .vnav-label {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        @media (max-width: 860px) {
+            .vertical-nav {
+                display: none;
+            }
+        }
+
+        /* REVEAL ANIMATIONS */
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: var(--transition-slow);
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 1 — HERO SECTION & PRECISE SVG PATH-BASED ALIGNMENT */
+        .hero {
+            min-height: calc(100vh - var(--global-header-height));
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-lg);
+            align-items: center;
+            width: 100%;
+        }
+
+        @media (min-width: 900px) {
+            .hero-layout {
+                grid-template-columns: 55% 45%;
+            }
+        }
+
+        .hero-main {
+            max-width: 48rem;
+        }
+
+        .hero-conceptual-motif {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .motif-svg-path {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .motif-pulse-particle {
+            animation: pulseTravel 4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+        }
+
+        @keyframes pulseTravel {
+            0% { stroke-dashoffset: 240; opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { stroke-dashoffset: 0; opacity: 0.2; }
+        }
+
+        /* 2 — THE CHALLENGE: OPEN, UNGRIDDED, DISCONNECTED CANVAS */
+        #challenge-section .section-label::before { background-color: var(--color-agents); }
+
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-md);
+            margin-top: var(--space-2xs);
+        }
+
+        @media (min-width: 860px) {
+            .challenge-grid {
+                grid-template-columns: 5fr 7fr;
+                gap: var(--space-lg);
+                align-items: center;
+            }
+        }
+
+        /* Open Canvas with Deliberate Relative/Absolute Positioning (No Grid, No Boxes) */
+        .disconnected-visual-canvas {
+            margin: var(--space-sm) 0 var(--space-3xs);
+            position: relative;
+            height: 200px;
+            width: 100%;
+        }
+
+        .disconnected-node {
+            position: absolute;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-bottom: 1px solid var(--border-medium);
+            background-color: transparent;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            font-weight: 400;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .disconnected-node-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+        }
+
+        .disconnected-label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-top: var(--space-2xs);
+        }
+
+        /* 3 — THE APPROACH & BEFORE/AFTER TRANSFORMATION INFOGRAPHIC */
+        #approach-section .section-label::before { background-color: var(--color-skills); }
+
+        .approach-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: var(--space-sm);
+            margin: var(--space-md) 0;
+            width: 100%;
+        }
+
+        @media (max-width: 800px) {
+            .approach-grid {
+                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            }
+        }
+
+        .approach-step {
+            position: relative;
+            padding-top: var(--space-xs);
+        }
+
+        .approach-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--border-medium);
+            transition: background-color var(--transition-fast);
+        }
+
+        .approach-step:hover::before {
+            background-color: var(--color-skills);
+        }
+
+        .approach-step h4 {
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .approach-step p {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        .prominent-finish {
+            font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+            color: var(--text-main);
+            margin-top: var(--space-md);
+            padding-left: var(--space-sm);
+            border-left: 2px solid var(--color-skills);
+            font-weight: 300;
+            line-height: 1.45;
+            letter-spacing: -0.01em;
+        }
+
+        /* BEFORE -> AFTER TRANSFORMATION COMPARISON INFOGRAPHIC */
+        .transformation-infographic-container {
+            margin-top: var(--space-xl);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .transformation-comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: var(--space-md);
+            align-items: center;
+            margin-top: var(--space-sm);
+        }
+
+        @media (max-width: 768px) {
+            .transformation-comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-card {
+            padding: var(--space-sm);
+            border: 1px solid var(--border-subtle);
+            background-color: var(--bg-alt);
+        }
+
+        .comparison-title {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: var(--space-xs);
+        }
+
+        .comparison-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .comparison-item {
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+        }
+
+        .comparison-item.highlighted {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .comparison-center-arrow {
+            color: var(--color-skills);
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .attribution-bridge {
+            margin-top: var(--space-lg);
+            padding-top: var(--space-xs);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            line-height: 1.5;
+        }
+
+        /* 4 & 5 — DESIGNING THE PIPELINE (SCROLL PACING & GEOMETRICALLY BALANCED 3+2 MAP) */
+        #designing-chapter {
+            padding-top: 0;
+            position: relative;
+            contain: layout style;
+        }
+
+        .sticky-section-intro {
+            position: sticky;
+            top: var(--global-header-height);
+            z-index: 850;
+            background-color: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: var(--space-xs) 0;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: var(--space-md);
+        }
+
+        .sticky-intro-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+        }
+
+        .sticky-intro-content h2.section-label {
+            margin-bottom: 0;
+        }
+
+        .sticky-intro-content h2.section-label::before {
+            background-color: var(--color-orchestrator);
+        }
+
+        .sticky-intro-content p.lead-compact {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            font-weight: 400;
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
+
+        .sticky-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-md);
+            position: relative;
+        }
+
+        @media (min-width: 992px) {
+            .sticky-wrapper {
+                grid-template-columns: 38% 62%;
+                column-gap: var(--space-lg);
+            }
+        }
+
+        .story-text {
+            padding-bottom: 10vh;
+        }
+
+        /* 4 — Increased Scroll Pacing Dwell Time per State */
+        .story-step {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0.18; /* Fades to 18% for strong focal clarity */
+            transform: translateY(6px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .story-step[data-step="1"] { min-height: 80vh; }
+        .story-step[data-step="2"] { min-height: 68vh; }
+        .story-step[data-step="3"] { min-height: 68vh; }
+        .story-step[data-step="4"] { min-height: 68vh; }
+        .story-step[data-step="5"] { min-height: 70vh; }
+        .story-step[data-step="6"] { min-height: 85vh; }
+
+        .story-step.is-active-step {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-step h3 {
+            font-size: clamp(1.25rem, 1.6vw, 1.6rem);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-indicator-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .story-step[data-step="1"] .step-indicator-dot { background-color: var(--text-main); }
+        .story-step[data-step="2"] .step-indicator-dot { background-color: var(--color-skills); }
+        .story-step[data-step="3"] .step-indicator-dot { background-color: var(--color-agents); }
+        .story-step[data-step="4"] .step-indicator-dot { background-color: var(--color-phases); }
+        .story-step[data-step="5"] .step-indicator-dot { background-color: var(--color-human); }
+        .story-step[data-step="6"] .step-indicator-dot { background-color: var(--color-orchestrator); }
+
+        .story-step p {
+            font-size: 1.05rem;
+            margin-bottom: 0;
+        }
+
+        /* Sticky Right Architecture Visual Container (Vertically Centered) */
+        .sticky-visual-container {
+            position: sticky;
+            top: calc(var(--global-header-height) + var(--sticky-intro-height));
+            height: calc(100vh - var(--global-header-height) - var(--sticky-intro-height) - 1.5rem);
+            display: flex;
+            align-items: center; /* Vertically center system map */
+            justify-content: center;
+            border-left: 1px solid var(--border-subtle);
+            padding-left: var(--space-md);
+            overflow: hidden;
+        }
+
+        @media (max-width: 991px) {
+            .sticky-visual-container {
+                display: none; 
+            }
+        }
+
+        /* 5 — GEOMETRICALLY BALANCED 3 + 2 SYSTEM MAP (P01->P03 Top Row, P04->P05 Centered Bottom Row) */
+        .architecture-system-map {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            background: transparent;
+        }
+
+        .orch-top-bar {
+            border: 1px solid var(--color-orchestrator);
+            color: var(--color-orchestrator);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 6px 12px;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            opacity: 0;
+            transform: translateY(-8px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .orch-top-bar .orch-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .map-row {
+            display: grid;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .map-row-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* Lower 2-column row centered visually under 3-column top row */
+        .map-row-2-centered {
+            grid-template-columns: repeat(2, 1fr);
+            width: 70%;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 1200px) {
+            .map-row-3, .map-row-2-centered {
+                grid-template-columns: 1fr;
+                width: 100%;
+            }
+        }
+
+        .tree-stage {
+            position: relative;
+            padding-left: 10px;
+            border-left: 1.5px solid var(--border-medium);
+            transition: border-color var(--transition-fast);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .tree-stage-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 2px;
+        }
+
+        .phase-badge {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--color-phases);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .stage-name {
+            font-weight: 500;
+            font-size: 0.8rem;
+            letter-spacing: 0.02em;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .agent-line {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--color-agents);
+            margin-bottom: 2px;
+            opacity: 0;
+            transform: translateY(-2px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .agent-line::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 1px;
+            background-color: var(--color-agents);
+        }
+
+        .skills-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding-left: 4px;
+        }
+
+        .skill-node {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            line-height: 1.25;
+        }
+
+        .skill-code {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--color-skills);
+            font-weight: 500;
+        }
+
+        /* Prominent Human Decision in P03 */
+        .tree-stage.prominent-p03 {
+            min-width: 0;
+        }
+
+        .human-decision-inline {
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            margin: 3px 0;
+            padding: 3px 6px;
+            border-left: 2px solid var(--color-human);
+            background-color: rgba(52, 168, 83, 0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .human-decision-header {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            color: var(--color-human);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .concept-selector-mini {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .btn-concept-mini {
+            background: transparent;
+            border: 1px solid var(--border-medium);
+            padding: 1px 4px;
+            font-family: var(--font-main);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-concept-mini:hover, .btn-concept-mini.selected {
+            border-color: var(--color-human);
+            color: var(--color-human);
+            font-weight: 500;
+        }
+
+        /* Checkpoint Gates */
+        .gate-checkpoint {
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--color-human);
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .gate-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--color-human);
+            display: inline-block;
+        }
+
+        /* Flow Arrow Between Rows */
+        .map-connector-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--border-medium);
+            font-size: 0.85rem;
+            margin: -4px 0;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .arch-summary-mini {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            margin-top: 4px;
+            padding-top: 6px;
+            border-top: 1px solid var(--border-subtle);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-light);
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .arch-summary-mini span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .summary-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+        }
+
+        /* Progressive Accumulation State Rules */
+        .architecture-system-map[data-active-step="1"] .tree-stage,
+        .architecture-system-map[data-active-step="2"] .tree-stage,
+        .architecture-system-map[data-active-step="3"] .tree-stage,
+        .architecture-system-map[data-active-step="4"] .tree-stage,
+        .architecture-system-map[data-active-step="5"] .tree-stage,
+        .architecture-system-map[data-active-step="6"] .tree-stage {
+            border-left-color: var(--border-medium);
+        }
+
+        .architecture-system-map[data-active-step="1"] .map-connector-arrow {
+            opacity: 0.4;
+        }
+
+        .architecture-system-map[data-active-step="2"] .skill-node,
+        .architecture-system-map[data-active-step="3"] .skill-node,
+        .architecture-system-map[data-active-step="4"] .skill-node,
+        .architecture-system-map[data-active-step="5"] .skill-node,
+        .architecture-system-map[data-active-step="6"] .skill-node {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .architecture-system-map[data-active-step="3"] .agent-line,
+        .architecture-system-map[data-active-step="4"] .agent-line,
+        .architecture-system-map[data-active-step="5"] .agent-line,
+        .architecture-system-map[data-active-step="6"] .agent-line {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .architecture-system-map[data-active-step="4"] .phase-badge,
+        .architecture-system-map[data-active-step="5"] .phase-badge,
+        .architecture-system-map[data-active-step="6"] .phase-badge {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .architecture-system-map[data-active-step="4"] .tree-stage,
+        .architecture-system-map[data-active-step="5"] .tree-stage,
+        .architecture-system-map[data-active-step="6"] .tree-stage {
+            border-left-color: var(--color-phases);
+        }
+
+        .architecture-system-map[data-active-step="5"] .human-decision-inline,
+        .architecture-system-map[data-active-step="5"] .gate-checkpoint,
+        .architecture-system-map[data-active-step="6"] .human-decision-inline,
+        .architecture-system-map[data-active-step="6"] .gate-checkpoint {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .architecture-system-map[data-active-step="6"] .orch-top-bar,
+        .architecture-system-map[data-active-step="6"] .arch-summary-mini {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .architecture-system-map[data-active-step="6"] .map-connector-arrow {
+            color: var(--color-orchestrator);
+            opacity: 0.8;
+        }
+
+        .particle-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Mobile fallback */
+        .mobile-diagram {
+            display: none;
+            margin-top: var(--space-sm);
+            padding-left: var(--space-sm);
+            border-left: 1px solid var(--border-subtle);
+        }
+        
+        @media (max-width: 991px) {
+            .mobile-diagram { display: block; }
+            .story-step { min-height: auto; opacity: 1; transform: none; margin-bottom: var(--space-lg); }
+            .story-text { padding-bottom: 0; }
+        }
+
+        /* REDESIGNED COMPACT CLOSING PRINCIPLES SECTION */
+        .closing-section-wrapper {
+            position: relative;
+            z-index: 900;
+            background-color: var(--bg-color);
+            padding: var(--space-xl) 0 var(--space-xxl);
+        }
+
+        .closing-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .principles-horizontal-flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px 18px;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-main);
+            letter-spacing: 0.06em;
+            margin-bottom: var(--space-xl);
+        }
+
+        .principles-horizontal-flow .principle-node {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--bg-alt);
+            padding: 6px 12px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .principles-horizontal-flow .principle-node.wide {
+            padding: 6px 16px;
+        }
+
+        .principles-horizontal-flow .flow-arrow {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .final-editorial-statement {
+            max-width: 720px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .final-editorial-statement h3 {
+            font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+            font-weight: 300;
+            line-height: 1.35;
+            letter-spacing: -0.02em;
+            color: var(--text-main);
+        }
+
+        .final-editorial-statement h3 span.highlight {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* REDUCED MOTION */
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .reveal { opacity: 1; transform: none; }
+            .pipeline-teaser-line::before { transform: scaleX(1); animation: none; }
+            .teaser-stage { opacity: 1; transform: none; animation: none; }
+            .story-step { opacity: 1; transform: none; }
+            .particle-container { display: none; }
+        }
+    </style>
+</head>
+<body id="page-body">
+
+    <!-- SVG Icon Sprite Sheet -->
+    <svg style="display: none;">
+        <symbol id="icon-search" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </symbol>
+        <symbol id="icon-target" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="6"></circle>
+            <circle cx="12" cy="12" r="2"></circle>
+        </symbol>
+        <symbol id="icon-compass" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+        </symbol>
+        <symbol id="icon-nodes" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <path d="M10 6h4M17 10v4"></path>
+        </symbol>
+        <symbol id="icon-play" viewBox="0 0 24 24">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </symbol>
+        <symbol id="icon-tool" viewBox="0 0 24 24">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+        </symbol>
+        <symbol id="icon-person" viewBox="0 0 24 24">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+        </symbol>
+        <symbol id="icon-frame" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="9" y1="21" x2="9" y2="9"></line>
+        </symbol>
+        <symbol id="icon-human" viewBox="0 0 24 24">
+            <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"></path>
+            <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v6"></path>
+            <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"></path>
+            <path d="M18 8a2 2 0 0 1 2 2v4a6 6 0 0 1-6 6h-2a6 6 0 0 1-6-6V10a2 2 0 0 1 2-2"></path>
+        </symbol>
+        <symbol id="icon-route" viewBox="0 0 24 24">
+            <circle cx="6" cy="19" r="3"></circle>
+            <path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"></path>
+            <circle cx="18" cy="5" r="3"></circle>
+        </symbol>
+        <symbol id="icon-check" viewBox="0 0 24 24">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </symbol>
+        <symbol id="icon-link" viewBox="0 0 24 24">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        </symbol>
+    </svg>
+
+    <!-- Fixed Global Header Navigation -->
+    <header id="header">
+        <div class="nav-left">
+            <span class="nav-logo-dot"></span>
+            AI Design Pipeline
+        </div>
+        <div class="nav-right-context" id="nav-context-label">The Challenge</div>
+    </header>
+
+    <!-- Fixed Vertical Presentation Navigator -->
+    <nav class="vertical-nav" aria-label="Presentation chapter progress">
+        <button class="vnav-item active" data-chapter="1" onclick="scrollToChapter('challenge-chapter')" aria-label="The Challenge">
+            <span class="vnav-dot"></span>
+            <span class="vnav-label">Challenge</span>
+        </button>
+        <div class="vnav-line"></div>
+        <button class="vnav-item" data-chapter="2" onclick="scrollToChapter('approach-chapter')" aria-label="The Approach">
+            <span class="vnav-dot"></span>
+            <span class="vnav-label">Approach</span>
+        </button>
+        <div class="vnav-line"></div>
+        <button class="vnav-item" data-chapter="3" onclick="scrollToChapter('designing-chapter')" aria-label="Designing the Pipeline">
+            <span class="vnav-dot"></span>
+            <span class="vnav-label">Designing the Pipeline</span>
+        </button>
+    </nav>
+
+    <!-- MAIN CONTENT STREAM -->
+    <main>
+        
+        <!-- CHAPTER 1: THE CHALLENGE -->
+        <div id="challenge-chapter" class="chapter-section" data-chapter="1" data-context="The Challenge">
+            <div class="container">
+                <!-- HERO (WHAT WAS BUILT + MATHEMATICALLY PATH-CALCULATED MOTIF) -->
+                <section class="hero">
+                    <div class="hero-layout">
+                        <div class="hero-main">
+                            <h1 class="reveal">AI Design<br>Pipeline</h1>
+                            <p class="lead reveal" style="transition-delay: 0.1s;">A structured, human-controlled approach to AI-assisted UX design.</p>
+                        </div>
+                        
+                        <!-- 1 — Mathematically Path-Aligned Hero Motif using JS getPointAtLength() -->
+                        <div class="hero-conceptual-motif reveal" style="transition-delay: 0.25s;">
+                            <svg class="motif-svg-path" id="hero-svg-canvas" viewBox="0 0 320 180" fill="none">
+                                <!-- Mathematical Source-of-Truth Path: d="M 40 90 Q 90 40, 160 90 T 280 90" -->
+                                <path id="hero-main-route" d="M 40 90 Q 90 40, 160 90 T 280 90" stroke="#E8EAED" stroke-width="2" stroke-dasharray="4 4" />
+                                
+                                <!-- Animated Pulse Stream along exact path -->
+                                <path class="motif-pulse-particle" d="M 40 90 Q 90 40, 160 90 T 280 90" stroke="url(#hero-grad)" stroke-width="2.5" stroke-dasharray="240" stroke-dashoffset="240" />
+
+                                <!-- 2 Faded Unstructured Input Dots (OFF-PATH INTENTIONALLY) -->
+                                <circle cx="20" cy="72" r="3.5" fill="#1A73E8" opacity="0.45" />
+                                <circle cx="25" cy="108" r="3" fill="#EA4335" opacity="0.45" />
+
+                                <!-- Mathematical On-Path Nodes (Rendered dynamically in JS via getPointAtLength) -->
+                                <circle id="hero-node-1" r="4" fill="#1A73E8" />
+                                <circle id="hero-node-2" r="4" fill="#FBBC04" />
+
+                                <!-- Centred Human Decision Gate (Rendered dynamically at exact midpoint) -->
+                                <g id="hero-human-gate">
+                                    <circle cx="0" cy="0" r="13" fill="#FFFFFF" stroke="#34A853" stroke-width="2" />
+                                    <circle cx="0" cy="0" r="4.5" fill="#34A853" />
+                                </g>
+
+                                <circle id="hero-node-3" r="4" fill="#8E24AA" />
+                                <circle id="hero-node-4" r="4" fill="#1A73E8" />
+
+                                <defs>
+                                    <linearGradient id="hero-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#1A73E8" />
+                                        <stop offset="50%" stop-color="#34A853" />
+                                        <stop offset="100%" stop-color="#8E24AA" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2 — THE CHALLENGE (WHY): OPEN, UNGRIDDED, BALANCED ABSOLUTE DISCONNECTED NODES -->
+                <section id="challenge-section" class="reveal" style="padding-top: var(--space-lg);">
+                    <h2 class="section-label">THE CHALLENGE</h2>
+                    
+                    <div class="challenge-grid">
+                        <div>
+                            <p class="lead">AI can support individual UX activities. The opportunity was to connect them into one controlled design process.</p>
+                        </div>
+
+                        <div>
+                            <!-- Open Canvas with Deliberate Asymmetric Absolute Positions (No Grid, No Cards) -->
+                            <div class="disconnected-visual-canvas" id="challenge-visual">
+                                <div class="disconnected-node" style="top: 15px; left: 12%;">
+                                    <span class="disconnected-node-dot" style="background-color: var(--color-skills);"></span> Research
+                                </div>
+                                <div class="disconnected-node" style="top: 65px; left: 62%;">
+                                    <span class="disconnected-node-dot" style="background-color: var(--color-agents);"></span> Synthesis
+                                </div>
+                                <div class="disconnected-node" style="top: 110px; left: 24%;">
+                                    <span class="disconnected-node-dot" style="background-color: var(--color-phases);"></span> Ideation
+                                </div>
+                                <div class="disconnected-node" style="top: 155px; left: 5%;">
+                                    <span class="disconnected-node-dot" style="background-color: var(--color-human);"></span> Design
+                                </div>
+                                <div class="disconnected-node" style="top: 165px; left: 54%;">
+                                    <span class="disconnected-node-dot" style="background-color: var(--color-orchestrator);"></span> Validation
+                                </div>
+                            </div>
+                            <div class="disconnected-label" style="text-align: center;">INDIVIDUAL AI-ASSISTED ACTIVITIES</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="chapter-break-line"></div>
+
+        <!-- CHAPTER 2: THE APPROACH & 3 — BEFORE/AFTER TRANSFORMATION INFOGRAPHIC -->
+        <div id="approach-chapter" class="chapter-section" data-chapter="2" data-context="The Approach">
+            <div class="container">
+                <!-- THE APPROACH (THE ONE CANONICAL DESIGN PROCESS) -->
+                <section id="approach-section" class="reveal">
+                    <h2 class="section-label">THE APPROACH</h2>
+                    <p class="lead">Start with the design process, not the AI.</p>
+
+                    <div class="approach-grid">
+                        <div class="approach-step">
+                            <h4><svg class="icon"><use href="#icon-search"/></svg> UNDERSTAND</h4>
+                            <p>Evidence</p>
+                        </div>
+                        <div class="approach-step">
+                            <h4><svg class="icon"><use href="#icon-target"/></svg> DEFINE</h4>
+                            <p>Problem</p>
+                        </div>
+                        <div class="approach-step">
+                            <h4><svg class="icon"><use href="#icon-compass"/></svg> STRATEGIZE</h4>
+                            <p>Direction</p>
+                        </div>
+                        <div class="approach-step">
+                            <h4><svg class="icon"><use href="#icon-nodes"/></svg> DESIGN</h4>
+                            <p>Experience</p>
+                        </div>
+                        <div class="approach-step">
+                            <h4><svg class="icon"><use href="#icon-play"/></svg> REALIZE</h4>
+                            <p>Prototype</p>
+                        </div>
+                    </div>
+                    
+                    <div class="prominent-finish">
+                        The design process defines what needs to happen.<br>
+                        Orchestration defines how the work moves.
+                    </div>
+
+                    <!-- 3 — BEFORE -> AFTER TRANSFORMATION COMPARISON INFOGRAPHIC -->
+                    <div class="transformation-infographic-container reveal" style="transition-delay: 0.15s;">
+                        <div class="transformation-comparison-grid">
+                            
+                            <!-- BEFORE Column -->
+                            <div class="comparison-card">
+                                <div class="comparison-title">AI-ASSISTED TASKS</div>
+                                <div class="comparison-list">
+                                    <div class="comparison-item"><span style="color:var(--text-light);">•</span> Isolated activities</div>
+                                    <div class="comparison-item"><span style="color:var(--text-light);">•</span> Disconnected outputs</div>
+                                    <div class="comparison-item"><span style="color:var(--text-light);">•</span> Implicit decisions</div>
+                                </div>
+                            </div>
+
+                            <!-- Transformation Arrow -->
+                            <div class="comparison-center-arrow">→</div>
+
+                            <!-- AFTER Column -->
+                            <div class="comparison-card" style="border-color: var(--border-medium); background-color: var(--bg-color);">
+                                <div class="comparison-title" style="color: var(--color-skills);">ORCHESTRATED WORKFLOW</div>
+                                <div class="comparison-list">
+                                    <div class="comparison-item highlighted"><svg class="icon" style="color:var(--color-skills);"><use href="#icon-nodes"/></svg> Connected</div>
+                                    <div class="comparison-item highlighted"><svg class="icon" style="color:var(--color-phases);"><use href="#icon-link"/></svg> Traceable</div>
+                                    <div class="comparison-item highlighted"><svg class="icon" style="color:var(--color-human);"><use href="#icon-human"/></svg> Human-controlled</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="attribution-bridge">
+                        Design approach — developed for this project<br>
+                        Orchestration framework — introduced in the course
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="chapter-break-line"></div>
+
+        <!-- CHAPTER 3: DESIGNING THE PIPELINE (PROGRESSIVE SCROLLYTELLING TO COMPLETE SYSTEM) -->
+        <div id="designing-chapter" class="chapter-section" data-chapter="3" data-context="Designing the Pipeline">
+            
+            <!-- STICKY SECTION INTRO -->
+            <div class="sticky-section-intro">
+                <div class="container-wide">
+                    <div class="sticky-intro-content">
+                        <h2 class="section-label">DESIGNING THE PIPELINE</h2>
+                        <p class="lead-compact">Turning a UX process into an executable system.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-wide">
+                <section id="designing">
+                    <!-- Side-by-Side Protected Scrolling Grid -->
+                    <div class="sticky-wrapper">
+                        
+                        <!-- 4 — LEFT STORY TRACK WITH DWELL PACING -->
+                        <div class="story-text">
+                            
+                            <!-- STATE 1: PROCESS (80vh) -->
+                            <div class="story-step is-active-step trigger-step" data-step="1">
+                                <h3><span class="step-indicator-dot"></span> Process</h3>
+                                <p class="mono" style="color: var(--text-main); margin-bottom: var(--space-3xs);">UNDERSTAND → DEFINE → STRATEGIZE → DESIGN → REALIZE</p>
+                                <p>Start with the UX process as the backbone.</p>
+                                
+                                <div class="mobile-diagram">
+                                    <div style="font-weight:500;">UNDERSTAND</div>
+                                    <div style="font-weight:500;">DEFINE</div>
+                                    <div style="font-weight:500;">STRATEGIZE</div>
+                                    <div style="font-weight:500;">DESIGN</div>
+                                    <div style="font-weight:500;">REALIZE</div>
+                                </div>
+                            </div>
+
+                            <!-- STATE 2: SKILLS (68vh) -->
+                            <div class="story-step trigger-step" data-step="2">
+                                <h3><span class="step-indicator-dot"></span> <svg class="icon" style="color:var(--color-skills);"><use href="#icon-tool"/></svg> Skills</h3>
+                                <p>Make UX activities executable.</p>
+
+                                <div class="mobile-diagram">
+                                    <div style="font-weight:500;">UNDERSTAND</div>
+                                    <div>S01 — Knowledge Base Builder</div>
+                                    <div>S02 — Project Understanding</div>
+                                    <div style="font-weight:500; margin-top:0.5rem;">DEFINE</div>
+                                    <div>S03 — Persona Synthesis</div>
+                                    <div>S04 — Pain Point Extraction</div>
+                                    <div>S05 — Problem Definition</div>
+                                </div>
+                            </div>
+
+                            <!-- STATE 3: AGENTS (68vh) -->
+                            <div class="story-step trigger-step" data-step="3">
+                                <h3><span class="step-indicator-dot"></span> <svg class="icon" style="color:var(--color-agents);"><use href="#icon-person"/></svg> Agents</h3>
+                                <p>Assign specialised responsibility.</p>
+                                
+                                <div class="mobile-diagram">
+                                    <div style="font-weight:500;">UNDERSTAND & DEFINE</div>
+                                    <div style="color:var(--color-agents);">A01 — Research Agent</div>
+                                    <div>S01–S05</div>
+                                </div>
+                            </div>
+
+                            <!-- STATE 4: PHASES (68vh) -->
+                            <div class="story-step trigger-step" data-step="4">
+                                <h3><span class="step-indicator-dot"></span> <svg class="icon" style="color:var(--color-phases);"><use href="#icon-frame"/></svg> Phases</h3>
+                                <p>Create controlled execution boundaries.</p>
+                                
+                                <div class="mobile-diagram mono">
+                                    P01 — Project Understanding<br>
+                                    P02 — Research & Definition<br>
+                                    P03 — Solution Strategy<br>
+                                    P04 — Experience Design<br>
+                                    P05 — Experience Realization
+                                </div>
+                            </div>
+
+                            <!-- STATE 5: HUMAN CONTROL (70vh) -->
+                            <div class="story-step trigger-step" data-step="5">
+                                <h3><span class="step-indicator-dot"></span> <svg class="icon" style="color:var(--color-human);"><use href="#icon-human"/></svg> Human Control</h3>
+                                <p>Keep critical decisions human.</p>
+                                <p style="font-size:0.9rem; color:var(--text-muted); margin-top:4px;">
+                                    <strong>Human Decision:</strong> Choose direction (Concept selection).<br>
+                                    <strong>Human Gate:</strong> Approve progression (P01–P05 Reviews).
+                                </p>
+                            </div>
+
+                            <!-- STATE 6: ORCHESTRATOR & COMPLETE SYSTEM (85vh) -->
+                            <div class="story-step trigger-step" data-step="6">
+                                <h3><span class="step-indicator-dot"></span> <svg class="icon" style="color:var(--color-orchestrator);"><use href="#icon-route"/></svg> Orchestrator</h3>
+                                <p>Coordinate the system.</p>
+                                <p style="font-size:0.95rem; color:var(--text-main); margin-top:8px; font-weight:500;">
+                                    What began as a UX process is now an orchestrated, human-controlled design pipeline.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- 5 — RIGHT STICKY VISUAL TRACK (VERTICALLY CENTERED GEOMETRICALLY BALANCED 3+2 MAP) -->
+                        <div class="sticky-visual-container">
+                            <div class="architecture-system-map" id="sticky-diagram" data-active-step="1">
+                                
+                                <!-- Particle Canvas Overlay for Micro-motions & Burst -->
+                                <div class="particle-container" id="particle-overlay"></div>
+
+                                <!-- Orchestrator Top Bar -->
+                                <div class="orch-top-bar">
+                                    <span class="orch-title"><svg class="icon"><use href="#icon-route"/></svg> SYSTEM ORCHESTRATOR</span>
+                                    <span>ROUTES EXECUTION & RESPECTS HUMAN GATES</span>
+                                </div>
+
+                                <!-- TOP ROW: P01, P02, P03 (3 STAGES) -->
+                                <div class="map-row map-row-3">
+                                    
+                                    <!-- Stage 1: Understand -->
+                                    <div class="tree-stage">
+                                        <div class="tree-stage-header">
+                                            <span class="phase-badge">P01</span>
+                                            <span class="stage-name"><svg class="icon" style="color:var(--text-light);"><use href="#icon-search"/></svg> UNDERSTAND</span>
+                                        </div>
+                                        <div class="agent-line">A01 — Research Agent</div>
+                                        <div class="skills-group">
+                                            <div class="skill-node"><span class="skill-code">S01</span> Knowledge Base Builder</div>
+                                            <div class="skill-node"><span class="skill-code">S02</span> Project Understanding</div>
+                                        </div>
+                                        <div class="gate-checkpoint"><span class="gate-dot"></span> G01 Checkpoint</div>
+                                    </div>
+
+                                    <!-- Stage 2: Define -->
+                                    <div class="tree-stage">
+                                        <div class="tree-stage-header">
+                                            <span class="phase-badge">P02</span>
+                                            <span class="stage-name"><svg class="icon" style="color:var(--text-light);"><use href="#icon-target"/></svg> DEFINE</span>
+                                        </div>
+                                        <div class="agent-line">A01 — Research Agent</div>
+                                        <div class="skills-group">
+                                            <div class="skill-node"><span class="skill-code">S03</span> Persona Synthesis</div>
+                                            <div class="skill-node"><span class="skill-code">S04</span> Pain Point Extraction</div>
+                                            <div class="skill-node"><span class="skill-code">S05</span> Problem Definition</div>
+                                        </div>
+                                        <div class="gate-checkpoint"><span class="gate-dot"></span> G02 Checkpoint</div>
+                                    </div>
+
+                                    <!-- Stage 3: Strategize (PROMINENT P03 WITH HUMAN CONCEPT SELECTION) -->
+                                    <div class="tree-stage prominent-p03">
+                                        <div class="tree-stage-header">
+                                            <span class="phase-badge">P03</span>
+                                            <span class="stage-name"><svg class="icon" style="color:var(--text-light);"><use href="#icon-compass"/></svg> STRATEGIZE</span>
+                                        </div>
+                                        <div class="agent-line">A02 — Strategy Agent</div>
+                                        <div class="skills-group">
+                                            <div class="skill-node"><span class="skill-code">S06</span> Competitive Analysis</div>
+                                            <div class="skill-node"><span class="skill-code">S07</span> Concept Direction</div>
+                                            
+                                            <!-- Prominent Human Decision Element -->
+                                            <div class="human-decision-inline">
+                                                <div class="human-decision-header"><svg class="icon"><use href="#icon-human"/></svg> HUMAN DECISION: CONCEPT</div>
+                                                <div class="concept-selector-mini">
+                                                    <button class="btn-concept-mini" onclick="selectConceptMini(this, 'Concept A')">Concept A</button>
+                                                    <button class="btn-concept-mini" onclick="selectConceptMini(this, 'Concept B')">Concept B</button>
+                                                    <button class="btn-concept-mini" onclick="selectConceptMini(this, 'Concept C')">Concept C</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="skill-node"><span class="skill-code">S08</span> Information Architecture</div>
+                                        </div>
+                                        <div class="gate-checkpoint"><span class="gate-dot"></span> G03 Checkpoint</div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Flow Arrow Connector to Lower Row -->
+                                <div class="map-connector-arrow">↴</div>
+
+                                <!-- BOTTOM ROW: P04, P05 (2 STAGES CENTRED BENEATH TOP ROW) -->
+                                <div class="map-row map-row-2-centered">
+                                    
+                                    <!-- Stage 4: Design -->
+                                    <div class="tree-stage">
+                                        <div class="tree-stage-header">
+                                            <span class="phase-badge">P04</span>
+                                            <span class="stage-name"><svg class="icon" style="color:var(--text-light);"><use href="#icon-nodes"/></svg> DESIGN</span>
+                                        </div>
+                                        <div class="agent-line">A03 — Experience Architecture Agent</div>
+                                        <div class="skills-group">
+                                            <div class="skill-node"><span class="skill-code">S09</span> User Flow</div>
+                                            <div class="skill-node"><span class="skill-code">S10</span> Feature Decomposition</div>
+                                            <div class="skill-node"><span class="skill-code">S11</span> Experience Blueprint</div>
+                                        </div>
+                                        <div class="gate-checkpoint"><span class="gate-dot"></span> G04 Checkpoint</div>
+                                    </div>
+
+                                    <!-- Stage 5: Realize -->
+                                    <div class="tree-stage">
+                                        <div class="tree-stage-header">
+                                            <span class="phase-badge">P05</span>
+                                            <span class="stage-name"><svg class="icon" style="color:var(--text-light);"><use href="#icon-play"/></svg> REALIZE</span>
+                                        </div>
+                                        <div class="agent-line">A04 — Design Agent</div>
+                                        <div class="skills-group">
+                                            <div class="skill-node"><span class="skill-code">S12</span> Prototype Builder</div>
+                                        </div>
+                                        <div class="gate-checkpoint"><span class="gate-dot"></span> G05 Checkpoint</div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Architecture Payoff Summary -->
+                                <div class="arch-summary-mini">
+                                    <span><span class="summary-dot" style="background-color: var(--color-skills);"></span> 12 Skills</span>
+                                    <span><span class="summary-dot" style="background-color: var(--color-agents);"></span> 4 Agents</span>
+                                    <span><span class="summary-dot" style="background-color: var(--color-phases);"></span> 5 Phases</span>
+                                    <span><span class="summary-dot" style="background-color: var(--color-human);"></span> 5 Gates</span>
+                                    <span><span class="summary-dot" style="background-color: var(--color-orchestrator);"></span> 1 Orchestrator</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="chapter-break-line"></div>
+
+        <!-- REDESIGNED COMPACT CLOSING PRINCIPLES SECTION -->
+        <section class="closing-section-wrapper">
+            <div class="container">
+                <div class="closing-container reveal">
+                    
+                    <!-- Compact Horizontal Progression Flow -->
+                    <div class="principles-horizontal-flow">
+                        <div class="principle-node">EVIDENCE</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="principle-node">TRACEABILITY</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="principle-node">CONFIDENCE</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="principle-node wide">PROGRESSIVE COMPLETENESS</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="principle-node" style="color: var(--color-human); font-weight: 500;">HUMAN CONTROL</div>
+                    </div>
+
+                    <!-- Final Editorial Statement (Controlled Reading Width ~720px) -->
+                    <div class="final-editorial-statement">
+                        <h3>
+                            AI can move the work forward.<br>
+                            <span class="highlight">Evidence and human judgement determine whether the design moves forward.</span>
+                        </h3>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Mathematical Hero Node Positioning on Exact Path Coordinates via getPointAtLength()
+        function alignHeroMotifNodes() {
+            const path = document.getElementById('hero-main-route');
+            if (!path) return;
+            
+            const totalLen = path.getTotalLength();
+            
+            // Exact parametric positions along the 240px bezier curve
+            const p1 = path.getPointAtLength(totalLen * 0.15); // Solid Blue
+            const p2 = path.getPointAtLength(totalLen * 0.35); // Yellow
+            const pGate = path.getPointAtLength(totalLen * 0.50); // Green Human Decision Gate
+            const p3 = path.getPointAtLength(totalLen * 0.72); // Purple
+            const p4 = path.getPointAtLength(totalLen * 0.88); // Final Blue
+
+            const n1 = document.getElementById('hero-node-1');
+            const n2 = document.getElementById('hero-node-2');
+            const gate = document.getElementById('hero-human-gate');
+            const n3 = document.getElementById('hero-node-3');
+            const n4 = document.getElementById('hero-node-4');
+
+            if (n1) { n1.setAttribute('cx', p1.x); n1.setAttribute('cy', p1.y); }
+            if (n2) { n2.setAttribute('cx', p2.x); n2.setAttribute('cy', p2.y); }
+            if (gate) { gate.setAttribute('transform', `translate(${pGate.x}, ${pGate.y})`); }
+            if (n3) { n3.setAttribute('cx', p3.x); n3.setAttribute('cy', p3.y); }
+            if (n4) { n4.setAttribute('cx', p4.x); n4.setAttribute('cy', p4.y); }
+        }
+
+        // Initialize hero alignment on DOM load
+        window.addEventListener('DOMContentLoaded', alignHeroMotifNodes);
+        window.addEventListener('resize', alignHeroMotifNodes);
+
+        // Header scroll border effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 30) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll to specific chapter by ID
+        function scrollToChapter(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Context Label & Chapter Observer
+        const chapterSections = document.querySelectorAll('.chapter-section');
+        const navContextLabel = document.getElementById('nav-context-label');
+        const vnavItems = document.querySelectorAll('.vnav-item');
+
+        const chapterObserverOptions = {
+            root: null,
+            rootMargin: '-30% 0px -40% 0px',
+            threshold: 0
+        };
+
+        const chapterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const chNum = entry.target.getAttribute('data-chapter');
+                    const contextTitle = entry.target.getAttribute('data-context');
+                    
+                    if (navContextLabel && contextTitle) {
+                        navContextLabel.innerText = contextTitle;
+                    }
+
+                    vnavItems.forEach(item => {
+                        if (item.getAttribute('data-chapter') === chNum) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }, chapterObserverOptions);
+
+        chapterSections.forEach(section => {
+            chapterObserver.observe(section);
+        });
+
+        // Intersection Observer for scroll reveals
+        const revealObserverOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.12
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, revealObserverOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // Particle System for Layer Micro-motions and Completion Burst
+        const particleOverlay = document.getElementById('particle-overlay');
+        const semanticColors = ['#1A73E8', '#EA4335', '#FBBC04', '#34A853', '#8E24AA'];
+
+        function triggerMicroParticles(count, isCelebration = false) {
+            if (!particleOverlay || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            
+            particleOverlay.innerHTML = '';
+            const width = particleOverlay.clientWidth;
+            const height = particleOverlay.clientHeight;
+
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                
+                const color = semanticColors[Math.floor(Math.random() * semanticColors.length)];
+                p.style.backgroundColor = color;
+                
+                const startX = isCelebration ? width / 2 : Math.random() * width;
+                const startY = isCelebration ? height / 2 : Math.random() * height;
+                
+                p.style.left = startX + 'px';
+                p.style.top = startY + 'px';
+                
+                particleOverlay.appendChild(p);
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = isCelebration ? 50 + Math.random() * 100 : 15 + Math.random() * 35;
+                const targetX = startX + Math.cos(angle) * distance;
+                const targetY = startY + Math.sin(angle) * distance;
+
+                p.animate([
+                    { opacity: 0, transform: 'scale(0.5)' },
+                    { opacity: 0.85, transform: 'scale(1.2)', offset: 0.3 },
+                    { opacity: 0, transform: `translate(${targetX - startX}px, ${targetY - startY}px) scale(0)` }
+                ], {
+                    duration: isCelebration ? 850 : 550,
+                    easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
+                });
+            }
+        }
+
+        // Sticky Diagram 6-Step Progression Observer
+        const stickyDiagram = document.getElementById('sticky-diagram');
+        const stepTriggers = document.querySelectorAll('.trigger-step');
+        let lastStep = "1";
+        let celebrationFired = false;
+        
+        const stepObserverOptions = {
+            root: null,
+            rootMargin: '-35% 0px -35% 0px', 
+            threshold: 0
+        };
+
+        const stepObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const stepNum = entry.target.getAttribute('data-step');
+                    
+                    if (stickyDiagram && stepNum !== lastStep) {
+                        stickyDiagram.setAttribute('data-active-step', stepNum);
+                        lastStep = stepNum;
+
+                        if (stepNum === "6" && !celebrationFired) {
+                            triggerMicroParticles(12, true);
+                            celebrationFired = true;
+                        } else if (stepNum !== "6") {
+                            triggerMicroParticles(4, false);
+                        }
+                    }
+
+                    stepTriggers.forEach(step => {
+                        if (step === entry.target) {
+                            step.classList.add('is-active-step');
+                        } else {
+                            step.classList.remove('is-active-step');
+                        }
+                    });
+                }
+            });
+        }, stepObserverOptions);
+
+        stepTriggers.forEach(trigger => {
+            stepObserver.observe(trigger);
+        });
+
+        // Mini Concept Selection Interaction for P03 Human Decision
+        function selectConceptMini(button, conceptName) {
+            const buttons = button.parentElement.querySelectorAll('.btn-concept-mini');
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+        }
+    </script>
+</body>
+</html>
