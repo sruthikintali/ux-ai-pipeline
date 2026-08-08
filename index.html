@@ -11,7 +11,7 @@
         :root {
             /* Contemporary Apple/Google Canvas Palette */
             --bg-color: #FFFFFF; 
-            --bg-alt: #FCFCFC;
+            --bg-alt: #F8F9FA;
             --text-main: #1C1C1B; 
             --text-muted: #5F6368; 
             --text-light: #9AA0A6;
@@ -21,6 +21,7 @@
             
             /* Restrained Semantic Colour System */
             --color-skills: #1A73E8;      /* Blue */
+            --color-skills-dark: #1557B0; /* Slightly darker blue for primary button hover */
             --color-agents: #EA4335;      /* Warm Coral / Red */
             --color-phases: #FBBC04;      /* Warm Yellow */
             --color-human: #34A853;       /* Green */
@@ -174,6 +175,14 @@
             position: relative;
         }
 
+        .bg-white {
+            background-color: var(--bg-color);
+        }
+
+        .bg-light-grey {
+            background-color: var(--bg-alt);
+        }
+
         .chapter-break-line {
             width: 100%;
             height: 1px;
@@ -320,7 +329,7 @@
             transform: translateY(0);
         }
 
-        /* 1 — HERO SECTION & PRECISE SVG PATH-BASED ALIGNMENT */
+        /* HERO SECTION */
         .hero {
             min-height: calc(100vh - var(--global-header-height));
             display: flex;
@@ -371,7 +380,7 @@
             100% { stroke-dashoffset: 0; opacity: 0.2; }
         }
 
-        /* 2 — THE CHALLENGE: OPEN, UNGRIDDED, DISCONNECTED CANVAS */
+        /* THE CHALLENGE */
         #challenge-section .section-label::before { background-color: var(--color-agents); }
 
         .challenge-grid {
@@ -389,7 +398,6 @@
             }
         }
 
-        /* Open Canvas with Deliberate Relative/Absolute Positioning (No Grid, No Boxes) */
         .disconnected-visual-canvas {
             margin: var(--space-sm) 0 var(--space-3xs);
             position: relative;
@@ -426,7 +434,7 @@
             margin-top: var(--space-2xs);
         }
 
-        /* 3 — THE APPROACH & BEFORE/AFTER TRANSFORMATION INFOGRAPHIC */
+        /* THE APPROACH */
         #approach-section .section-label::before { background-color: var(--color-skills); }
 
         .approach-grid {
@@ -491,7 +499,6 @@
             letter-spacing: -0.01em;
         }
 
-        /* BEFORE -> AFTER TRANSFORMATION COMPARISON INFOGRAPHIC */
         .transformation-infographic-container {
             margin-top: var(--space-xl);
             padding-top: var(--space-lg);
@@ -515,7 +522,7 @@
         .comparison-card {
             padding: var(--space-sm);
             border: 1px solid var(--border-subtle);
-            background-color: var(--bg-alt);
+            background-color: var(--bg-color);
         }
 
         .comparison-title {
@@ -564,7 +571,7 @@
             line-height: 1.5;
         }
 
-        /* 4 & 5 — DESIGNING THE PIPELINE (SCROLL PACING & GEOMETRICALLY BALANCED 3+2 MAP) */
+        /* DESIGNING THE PIPELINE */
         #designing-chapter {
             padding-top: 0;
             position: relative;
@@ -623,12 +630,11 @@
             padding-bottom: 10vh;
         }
 
-        /* 4 — Increased Scroll Pacing Dwell Time per State */
         .story-step {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            opacity: 0.18; /* Fades to 18% for strong focal clarity */
+            opacity: 0.18;
             transform: translateY(6px);
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
@@ -673,13 +679,12 @@
             margin-bottom: 0;
         }
 
-        /* Sticky Right Architecture Visual Container (Vertically Centered) */
         .sticky-visual-container {
             position: sticky;
             top: calc(var(--global-header-height) + var(--sticky-intro-height));
             height: calc(100vh - var(--global-header-height) - var(--sticky-intro-height) - 1.5rem);
             display: flex;
-            align-items: center; /* Vertically center system map */
+            align-items: center;
             justify-content: center;
             border-left: 1px solid var(--border-subtle);
             padding-left: var(--space-md);
@@ -692,7 +697,7 @@
             }
         }
 
-        /* 5 — GEOMETRICALLY BALANCED 3 + 2 SYSTEM MAP (P01->P03 Top Row, P04->P05 Centered Bottom Row) */
+        /* SYSTEM MAP */
         .architecture-system-map {
             width: 100%;
             display: flex;
@@ -734,7 +739,6 @@
             grid-template-columns: repeat(3, 1fr);
         }
 
-        /* Lower 2-column row centered visually under 3-column top row */
         .map-row-2-centered {
             grid-template-columns: repeat(2, 1fr);
             width: 70%;
@@ -824,6 +828,7 @@
             align-items: center;
             gap: 4px;
             line-height: 1.25;
+            padding: 1px 2px;
         }
 
         .skill-code {
@@ -833,7 +838,6 @@
             font-weight: 500;
         }
 
-        /* Prominent Human Decision in P03 */
         .tree-stage.prominent-p03 {
             min-width: 0;
         }
@@ -884,7 +888,6 @@
             font-weight: 500;
         }
 
-        /* Checkpoint Gates */
         .gate-checkpoint {
             opacity: 0;
             transform: scale(0.92);
@@ -897,6 +900,7 @@
             color: var(--color-human);
             font-weight: 600;
             margin-top: 4px;
+            padding: 2px 4px;
         }
 
         .gate-dot {
@@ -907,7 +911,6 @@
             display: inline-block;
         }
 
-        /* Flow Arrow Between Rows */
         .map-connector-arrow {
             display: flex;
             align-items: center;
@@ -944,6 +947,36 @@
             width: 5px;
             height: 5px;
             border-radius: 50%;
+        }
+
+        /* PRIMARY CTA BUTTON STYLING FOR "EXPLORE THE ARCHITECTURE" */
+        .explore-trigger-pill {
+            opacity: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin: 12px auto 0 auto;
+            padding: 6px 14px;
+            background-color: var(--color-skills);
+            border: 1px solid var(--color-skills);
+            border-radius: 100px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: #FFFFFF;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .explore-trigger-pill:hover {
+            background-color: var(--color-skills-dark);
+            border-color: var(--color-skills-dark);
+            color: #FFFFFF;
+        }
+
+        .explore-trigger-pill .icon {
+            color: #FFFFFF;
         }
 
         /* Progressive Accumulation State Rules */
@@ -999,7 +1032,8 @@
         }
 
         .architecture-system-map[data-active-step="6"] .orch-top-bar,
-        .architecture-system-map[data-active-step="6"] .arch-summary-mini {
+        .architecture-system-map[data-active-step="6"] .arch-summary-mini,
+        .architecture-system-map[data-active-step="6"] .explore-trigger-pill {
             opacity: 1;
             transform: translateY(0);
         }
@@ -1029,25 +1063,470 @@
             pointer-events: none;
         }
 
-        /* Mobile fallback */
-        .mobile-diagram {
-            display: none;
-            margin-top: var(--space-sm);
-            padding-left: var(--space-sm);
-            border-left: 1px solid var(--border-subtle);
+        /* WHAT THE PIPELINE PRODUCES */
+        #outputs-chapter {
+            padding-top: var(--space-xl);
+            background-color: var(--bg-alt);
         }
-        
-        @media (max-width: 991px) {
-            .mobile-diagram { display: block; }
-            .story-step { min-height: auto; opacity: 1; transform: none; margin-bottom: var(--space-lg); }
-            .story-text { padding-bottom: 0; }
+
+        #outputs-section .section-label::before {
+            background-color: var(--color-skills);
+        }
+
+        .outputs-phase-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin: var(--space-md) 0;
+        }
+
+        @media (max-width: 900px) {
+            .outputs-phase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .output-phase-col {
+            padding: 12px;
+            border: 1px solid var(--border-subtle);
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .output-phase-header {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--color-phases);
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 4px;
+        }
+
+        .output-chips-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .output-chip {
+            font-size: 0.78rem;
+            color: var(--text-main);
+            padding: 3px 6px;
+            background-color: var(--bg-alt);
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .outputs-value-stream {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin: var(--space-md) 0 var(--space-sm) 0;
+        }
+
+        .outputs-value-stream span.v-highlight {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* TESTING THE PIPELINE */
+        #testing-chapter {
+            padding-top: var(--space-xl);
+            background-color: var(--bg-color);
+        }
+
+        #testing-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #testing-section .section-label::before {
+            background-color: var(--color-human);
+        }
+
+        #testing-section .section-label {
+            justify-content: center;
+        }
+
+        .discovery-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-md);
+            margin: var(--space-md) 0;
+            width: 100%;
+            max-width: var(--content-width);
+            text-align: left;
+        }
+
+        @media (min-width: 768px) {
+            .discovery-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: var(--space-lg);
+            }
+        }
+
+        .control-type-card {
+            padding: var(--space-sm);
+            border-left: 3px solid var(--border-medium);
+            background-color: var(--bg-alt);
+        }
+
+        .control-type-card.type-gate {
+            border-left-color: var(--color-human);
+        }
+
+        .control-type-card.type-decision {
+            border-left-color: var(--color-skills);
+        }
+
+        .control-badge-label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            margin-bottom: 4px;
+        }
+
+        .before-after-flow-mini {
+            margin: var(--space-md) auto;
+            padding: var(--space-sm);
+            border: 1px solid var(--border-subtle);
+            background-color: var(--bg-alt);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            width: 100%;
+            max-width: 720px;
+        }
+
+        .flow-step-box {
+            padding: 4px 8px;
+            border: 1px solid var(--border-medium);
+            background-color: var(--bg-color);
+        }
+
+        .flow-step-box.human-highlight {
+            border-color: var(--color-human);
+            color: var(--color-human);
+            font-weight: 600;
+            background-color: rgba(52, 168, 83, 0.04);
+        }
+
+        .testing-centered-conclusion {
+            font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+            color: var(--text-main);
+            font-weight: 400;
+            text-align: center;
+            margin: var(--space-md) auto 0 auto;
+            width: 100%;
+            max-width: 720px;
+            line-height: 1.45;
+        }
+
+        /* FIXED-SIZE STABLE ARCHITECTURE EXPLORER MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-md);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .modal-overlay.is-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* STABLE MODAL PANEL - FIXED HEIGHT ON DESKTOP & MOBILE */
+        .modal-panel {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-dark);
+            max-width: 760px;
+            width: 100%;
+            height: 82vh; /* Fixed height on desktop */
+            display: flex;
+            flex-direction: column;
+            padding: var(--space-md);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(12px) scale(0.98);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .modal-panel {
+                width: calc(100vw - 32px);
+                height: 90vh;
+                padding: var(--space-sm);
+            }
+        }
+
+        .modal-overlay.is-open .modal-panel {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header-block {
+            margin-bottom: var(--space-xs);
+            padding-bottom: var(--space-2xs);
+            border-bottom: 1px solid var(--border-subtle);
+            flex-shrink: 0;
+        }
+
+        .modal-title {
+            font-size: 1.35rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+
+        .modal-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .explorer-tabs-nav {
+            display: flex;
+            gap: 4px;
+            margin-bottom: var(--space-xs);
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 8px;
+            overflow-x: auto;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 6px 12px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            background-color: var(--bg-alt);
+        }
+
+        .tab-btn.active {
+            color: var(--text-main);
+            background-color: var(--bg-alt);
+            font-weight: 600;
+            border-bottom: 2px solid var(--color-skills);
+        }
+
+        .tab-btn[data-tab="agents"].active { border-bottom-color: var(--color-agents); }
+        .tab-btn[data-tab="phases"].active { border-bottom-color: var(--color-phases); }
+        .tab-btn[data-tab="human"].active { border-bottom-color: var(--color-human); }
+        .tab-btn[data-tab="orchestrator"].active { border-bottom-color: var(--color-orchestrator); }
+
+        /* INNER SCROLLABLE CONTENT AREA */
+        .modal-scroll-area {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .accordion-header {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-main);
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text-main);
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .accordion-header:hover {
+            color: var(--color-skills);
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 0 0 12px 12px;
+            font-size: 0.82rem;
+        }
+
+        .accordion-item.is-active .accordion-content {
+            display: block;
+        }
+
+        .accordion-item.is-active .accordion-header {
+            color: var(--color-skills);
+        }
+
+        .skill-q-block {
+            margin-bottom: 6px;
+        }
+
+        .skill-q-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .skill-q-text {
+            color: var(--text-muted);
+        }
+
+        .accordion-decision-banner {
+            margin: 8px 0;
+            padding: 8px 12px;
+            background-color: rgba(52, 168, 83, 0.04);
+            border-left: 3px solid var(--color-human);
+            font-size: 0.8rem;
+        }
+
+        /* STABLE FOOTER AREA FOR PIPELINE MAP */
+        .modal-footer-area {
+            margin-top: auto;
+            padding-top: 8px;
+            border-top: 1px solid var(--border-subtle);
+            flex-shrink: 0;
+        }
+
+        .map-toggle-btn {
+            background: none;
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-skills);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 0;
+        }
+
+        .map-toggle-btn:hover {
+            text-decoration: underline;
+        }
+
+        .map-expandable-content {
+            display: none;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border-subtle);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-main);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+
+        .map-expandable-content.is-expanded {
+            display: block;
+        }
+
+        .map-phase-block {
+            margin-bottom: 12px;
+            padding-left: 8px;
+            border-left: 2px solid var(--color-phases);
+        }
+
+        .map-phase-title {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .map-agent-sub {
+            color: var(--color-agents);
+            margin-bottom: 2px;
+            padding-left: 8px;
+        }
+
+        .map-skill-sub {
+            color: var(--text-muted);
+            padding-left: 16px;
+        }
+
+        .map-gate-sub {
+            color: var(--color-human);
+            font-weight: 600;
+            padding-left: 8px;
+            margin-top: 2px;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .modal-close-btn:hover {
+            color: var(--text-main);
         }
 
         /* REDESIGNED COMPACT CLOSING PRINCIPLES SECTION */
         .closing-section-wrapper {
             position: relative;
             z-index: 900;
-            background-color: var(--bg-color);
+            background-color: var(--bg-alt);
             padding: var(--space-xl) 0 var(--space-xxl);
         }
 
@@ -1075,7 +1554,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background-color: var(--bg-alt);
+            background-color: var(--bg-color);
             padding: 6px 12px;
             border: 1px solid var(--border-subtle);
         }
@@ -1180,6 +1659,13 @@
             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
         </symbol>
+        <symbol id="icon-close" viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+        </symbol>
+        <symbol id="icon-chevron-down" viewBox="0 0 24 24">
+            <polyline points="6 9 12 15 18 9"></polyline>
+        </symbol>
     </svg>
 
     <!-- Fixed Global Header Navigation -->
@@ -1191,7 +1677,7 @@
         <div class="nav-right-context" id="nav-context-label">The Challenge</div>
     </header>
 
-    <!-- Fixed Vertical Presentation Navigator -->
+    <!-- FIXED VERTICAL PRESENTATION NAVIGATOR -->
     <nav class="vertical-nav" aria-label="Presentation chapter progress">
         <button class="vnav-item active" data-chapter="1" onclick="scrollToChapter('challenge-chapter')" aria-label="The Challenge">
             <span class="vnav-dot"></span>
@@ -1205,17 +1691,27 @@
         <div class="vnav-line"></div>
         <button class="vnav-item" data-chapter="3" onclick="scrollToChapter('designing-chapter')" aria-label="Designing the Pipeline">
             <span class="vnav-dot"></span>
-            <span class="vnav-label">Designing the Pipeline</span>
+            <span class="vnav-label">Designing Pipeline</span>
+        </button>
+        <div class="vnav-line"></div>
+        <button class="vnav-item" data-chapter="4" onclick="scrollToChapter('outputs-chapter')" aria-label="What the Pipeline Produces">
+            <span class="vnav-dot"></span>
+            <span class="vnav-label">Outputs</span>
+        </button>
+        <div class="vnav-line"></div>
+        <button class="vnav-item" data-chapter="5" onclick="scrollToChapter('testing-chapter')" aria-label="Testing the Pipeline">
+            <span class="vnav-dot"></span>
+            <span class="vnav-label">Testing Pipeline</span>
         </button>
     </nav>
 
-    <!-- MAIN CONTENT STREAM -->
+    <!-- MAIN CONTENT STREAM WITH SUBTLE WHITE/LIGHT-GREY CHAPTER RHYTHM -->
     <main>
         
-        <!-- CHAPTER 1: THE CHALLENGE -->
-        <div id="challenge-chapter" class="chapter-section" data-chapter="1" data-context="The Challenge">
+        <!-- CHAPTER 1: THE CHALLENGE (PRIMARY WHITE) -->
+        <div id="challenge-chapter" class="chapter-section bg-white" data-chapter="1" data-context="The Challenge">
             <div class="container">
-                <!-- HERO (WHAT WAS BUILT + MATHEMATICALLY PATH-CALCULATED MOTIF) -->
+                <!-- HERO -->
                 <section class="hero">
                     <div class="hero-layout">
                         <div class="hero-main">
@@ -1223,24 +1719,17 @@
                             <p class="lead reveal" style="transition-delay: 0.1s;">A structured, human-controlled approach to AI-assisted UX design.</p>
                         </div>
                         
-                        <!-- 1 — Mathematically Path-Aligned Hero Motif using JS getPointAtLength() -->
                         <div class="hero-conceptual-motif reveal" style="transition-delay: 0.25s;">
                             <svg class="motif-svg-path" id="hero-svg-canvas" viewBox="0 0 320 180" fill="none">
-                                <!-- Mathematical Source-of-Truth Path: d="M 40 90 Q 90 40, 160 90 T 280 90" -->
                                 <path id="hero-main-route" d="M 40 90 Q 90 40, 160 90 T 280 90" stroke="#E8EAED" stroke-width="2" stroke-dasharray="4 4" />
-                                
-                                <!-- Animated Pulse Stream along exact path -->
                                 <path class="motif-pulse-particle" d="M 40 90 Q 90 40, 160 90 T 280 90" stroke="url(#hero-grad)" stroke-width="2.5" stroke-dasharray="240" stroke-dashoffset="240" />
 
-                                <!-- 2 Faded Unstructured Input Dots (OFF-PATH INTENTIONALLY) -->
                                 <circle cx="20" cy="72" r="3.5" fill="#1A73E8" opacity="0.45" />
                                 <circle cx="25" cy="108" r="3" fill="#EA4335" opacity="0.45" />
 
-                                <!-- Mathematical On-Path Nodes (Rendered dynamically in JS via getPointAtLength) -->
                                 <circle id="hero-node-1" r="4" fill="#1A73E8" />
                                 <circle id="hero-node-2" r="4" fill="#FBBC04" />
 
-                                <!-- Centred Human Decision Gate (Rendered dynamically at exact midpoint) -->
                                 <g id="hero-human-gate">
                                     <circle cx="0" cy="0" r="13" fill="#FFFFFF" stroke="#34A853" stroke-width="2" />
                                     <circle cx="0" cy="0" r="4.5" fill="#34A853" />
@@ -1261,7 +1750,7 @@
                     </div>
                 </section>
 
-                <!-- 2 — THE CHALLENGE (WHY): OPEN, UNGRIDDED, BALANCED ABSOLUTE DISCONNECTED NODES -->
+                <!-- THE CHALLENGE -->
                 <section id="challenge-section" class="reveal" style="padding-top: var(--space-lg);">
                     <h2 class="section-label">THE CHALLENGE</h2>
                     
@@ -1271,7 +1760,6 @@
                         </div>
 
                         <div>
-                            <!-- Open Canvas with Deliberate Asymmetric Absolute Positions (No Grid, No Cards) -->
                             <div class="disconnected-visual-canvas" id="challenge-visual">
                                 <div class="disconnected-node" style="top: 15px; left: 12%;">
                                     <span class="disconnected-node-dot" style="background-color: var(--color-skills);"></span> Research
@@ -1298,10 +1786,9 @@
 
         <div class="chapter-break-line"></div>
 
-        <!-- CHAPTER 2: THE APPROACH & 3 — BEFORE/AFTER TRANSFORMATION INFOGRAPHIC -->
-        <div id="approach-chapter" class="chapter-section" data-chapter="2" data-context="The Approach">
+        <!-- CHAPTER 2: THE APPROACH (LIGHT GREY) -->
+        <div id="approach-chapter" class="chapter-section bg-light-grey" data-chapter="2" data-context="The Approach">
             <div class="container">
-                <!-- THE APPROACH (THE ONE CANONICAL DESIGN PROCESS) -->
                 <section id="approach-section" class="reveal">
                     <h2 class="section-label">THE APPROACH</h2>
                     <p class="lead">Start with the design process, not the AI.</p>
@@ -1334,11 +1821,8 @@
                         Orchestration defines how the work moves.
                     </div>
 
-                    <!-- 3 — BEFORE -> AFTER TRANSFORMATION COMPARISON INFOGRAPHIC -->
                     <div class="transformation-infographic-container reveal" style="transition-delay: 0.15s;">
                         <div class="transformation-comparison-grid">
-                            
-                            <!-- BEFORE Column -->
                             <div class="comparison-card">
                                 <div class="comparison-title">AI-ASSISTED TASKS</div>
                                 <div class="comparison-list">
@@ -1348,10 +1832,8 @@
                                 </div>
                             </div>
 
-                            <!-- Transformation Arrow -->
                             <div class="comparison-center-arrow">→</div>
 
-                            <!-- AFTER Column -->
                             <div class="comparison-card" style="border-color: var(--border-medium); background-color: var(--bg-color);">
                                 <div class="comparison-title" style="color: var(--color-skills);">ORCHESTRATED WORKFLOW</div>
                                 <div class="comparison-list">
@@ -1360,7 +1842,6 @@
                                     <div class="comparison-item highlighted"><svg class="icon" style="color:var(--color-human);"><use href="#icon-human"/></svg> Human-controlled</div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -1374,10 +1855,9 @@
 
         <div class="chapter-break-line"></div>
 
-        <!-- CHAPTER 3: DESIGNING THE PIPELINE (PROGRESSIVE SCROLLYTELLING TO COMPLETE SYSTEM) -->
-        <div id="designing-chapter" class="chapter-section" data-chapter="3" data-context="Designing the Pipeline">
+        <!-- CHAPTER 3: DESIGNING THE PIPELINE (PRIMARY WHITE) -->
+        <div id="designing-chapter" class="chapter-section bg-white" data-chapter="3" data-context="Designing the Pipeline">
             
-            <!-- STICKY SECTION INTRO -->
             <div class="sticky-section-intro">
                 <div class="container-wide">
                     <div class="sticky-intro-content">
@@ -1389,83 +1869,48 @@
 
             <div class="container-wide">
                 <section id="designing">
-                    <!-- Side-by-Side Protected Scrolling Grid -->
                     <div class="sticky-wrapper">
                         
-                        <!-- 4 — LEFT STORY TRACK WITH DWELL PACING -->
+                        <!-- CLEAN LEFT STORY TRACK -->
                         <div class="story-text">
                             
-                            <!-- STATE 1: PROCESS (80vh) -->
                             <div class="story-step is-active-step trigger-step" data-step="1">
                                 <h3><span class="step-indicator-dot"></span> Process</h3>
                                 <p class="mono" style="color: var(--text-main); margin-bottom: var(--space-3xs);">UNDERSTAND → DEFINE → STRATEGIZE → DESIGN → REALIZE</p>
                                 <p>Start with the UX process as the backbone.</p>
-                                
-                                <div class="mobile-diagram">
-                                    <div style="font-weight:500;">UNDERSTAND</div>
-                                    <div style="font-weight:500;">DEFINE</div>
-                                    <div style="font-weight:500;">STRATEGIZE</div>
-                                    <div style="font-weight:500;">DESIGN</div>
-                                    <div style="font-weight:500;">REALIZE</div>
-                                </div>
                             </div>
 
-                            <!-- STATE 2: SKILLS (68vh) -->
                             <div class="story-step trigger-step" data-step="2">
                                 <h3><span class="step-indicator-dot"></span> <svg class="icon" style="color:var(--color-skills);"><use href="#icon-tool"/></svg> Skills</h3>
                                 <p>Make UX activities executable.</p>
-
-                                <div class="mobile-diagram">
-                                    <div style="font-weight:500;">UNDERSTAND</div>
-                                    <div>S01 — Knowledge Base Builder</div>
-                                    <div>S02 — Project Understanding</div>
-                                    <div style="font-weight:500; margin-top:0.5rem;">DEFINE</div>
-                                    <div>S03 — Persona Synthesis</div>
-                                    <div>S04 — Pain Point Extraction</div>
-                                    <div>S05 — Problem Definition</div>
-                                </div>
+                                <p style="font-size:0.9rem; color:var(--text-muted); margin-top:4px;">Each Skill owns a specific UX activity and its implementation.</p>
                             </div>
 
-                            <!-- STATE 3: AGENTS (68vh) -->
                             <div class="story-step trigger-step" data-step="3">
                                 <h3><span class="step-indicator-dot"></span> <svg class="icon" style="color:var(--color-agents);"><use href="#icon-person"/></svg> Agents</h3>
                                 <p>Assign specialised responsibility.</p>
-                                
-                                <div class="mobile-diagram">
-                                    <div style="font-weight:500;">UNDERSTAND & DEFINE</div>
-                                    <div style="color:var(--color-agents);">A01 — Research Agent</div>
-                                    <div>S01–S05</div>
-                                </div>
+                                <p style="font-size:0.9rem; color:var(--text-muted); margin-top:4px;">Agents execute related Skills and own execution responsibility.</p>
                             </div>
 
-                            <!-- STATE 4: PHASES (68vh) -->
                             <div class="story-step trigger-step" data-step="4">
                                 <h3><span class="step-indicator-dot"></span> <svg class="icon" style="color:var(--color-phases);"><use href="#icon-frame"/></svg> Phases</h3>
                                 <p>Create controlled execution boundaries.</p>
-                                
-                                <div class="mobile-diagram mono">
-                                    P01 — Project Understanding<br>
-                                    P02 — Research & Definition<br>
-                                    P03 — Solution Strategy<br>
-                                    P04 — Experience Design<br>
-                                    P05 — Experience Realization
-                                </div>
+                                <p style="font-size:0.9rem; color:var(--text-muted); margin-top:4px;">Five Phases organise the pipeline from project understanding to prototype realization.</p>
                             </div>
 
-                            <!-- STATE 5: HUMAN CONTROL (70vh) -->
                             <div class="story-step trigger-step" data-step="5">
                                 <h3><span class="step-indicator-dot"></span> <svg class="icon" style="color:var(--color-human);"><use href="#icon-human"/></svg> Human Control</h3>
                                 <p>Keep critical decisions human.</p>
                                 <p style="font-size:0.9rem; color:var(--text-muted); margin-top:4px;">
-                                    <strong>Human Decision:</strong> Choose direction (Concept selection).<br>
-                                    <strong>Human Gate:</strong> Approve progression (P01–P05 Reviews).
+                                    <strong>Human Decision:</strong> Chooses between valid directions.<br>
+                                    <strong>Human Gate:</strong> Approves whether completed work may progress.
                                 </p>
                             </div>
 
-                            <!-- STATE 6: ORCHESTRATOR & COMPLETE SYSTEM (85vh) -->
                             <div class="story-step trigger-step" data-step="6">
                                 <h3><span class="step-indicator-dot"></span> <svg class="icon" style="color:var(--color-orchestrator);"><use href="#icon-route"/></svg> Orchestrator</h3>
                                 <p>Coordinate the system.</p>
+                                <p style="font-size:0.9rem; color:var(--text-muted); margin-top:4px;">The Orchestrator routes execution across Phases, Agents, Skills and human controls.</p>
                                 <p style="font-size:0.95rem; color:var(--text-main); margin-top:8px; font-weight:500;">
                                     What began as a UX process is now an orchestrated, human-controlled design pipeline.
                                 </p>
@@ -1473,11 +1918,10 @@
 
                         </div>
 
-                        <!-- 5 — RIGHT STICKY VISUAL TRACK (VERTICALLY CENTERED GEOMETRICALLY BALANCED 3+2 MAP) -->
+                        <!-- RIGHT STICKY VISUAL TRACK -->
                         <div class="sticky-visual-container">
                             <div class="architecture-system-map" id="sticky-diagram" data-active-step="1">
                                 
-                                <!-- Particle Canvas Overlay for Micro-motions & Burst -->
                                 <div class="particle-container" id="particle-overlay"></div>
 
                                 <!-- Orchestrator Top Bar -->
@@ -1486,7 +1930,7 @@
                                     <span>ROUTES EXECUTION & RESPECTS HUMAN GATES</span>
                                 </div>
 
-                                <!-- TOP ROW: P01, P02, P03 (3 STAGES) -->
+                                <!-- TOP ROW: P01, P02, P03 -->
                                 <div class="map-row map-row-3">
                                     
                                     <!-- Stage 1: Understand -->
@@ -1518,7 +1962,7 @@
                                         <div class="gate-checkpoint"><span class="gate-dot"></span> G02 Checkpoint</div>
                                     </div>
 
-                                    <!-- Stage 3: Strategize (PROMINENT P03 WITH HUMAN CONCEPT SELECTION) -->
+                                    <!-- Stage 3: Strategize -->
                                     <div class="tree-stage prominent-p03">
                                         <div class="tree-stage-header">
                                             <span class="phase-badge">P03</span>
@@ -1529,7 +1973,6 @@
                                             <div class="skill-node"><span class="skill-code">S06</span> Competitive Analysis</div>
                                             <div class="skill-node"><span class="skill-code">S07</span> Concept Direction</div>
                                             
-                                            <!-- Prominent Human Decision Element -->
                                             <div class="human-decision-inline">
                                                 <div class="human-decision-header"><svg class="icon"><use href="#icon-human"/></svg> HUMAN DECISION: CONCEPT</div>
                                                 <div class="concept-selector-mini">
@@ -1546,10 +1989,9 @@
 
                                 </div>
 
-                                <!-- Flow Arrow Connector to Lower Row -->
                                 <div class="map-connector-arrow">↴</div>
 
-                                <!-- BOTTOM ROW: P04, P05 (2 STAGES CENTRED BENEATH TOP ROW) -->
+                                <!-- BOTTOM ROW: P04, P05 -->
                                 <div class="map-row map-row-2-centered">
                                     
                                     <!-- Stage 4: Design -->
@@ -1582,7 +2024,6 @@
 
                                 </div>
 
-                                <!-- Architecture Payoff Summary -->
                                 <div class="arch-summary-mini">
                                     <span><span class="summary-dot" style="background-color: var(--color-skills);"></span> 12 Skills</span>
                                     <span><span class="summary-dot" style="background-color: var(--color-agents);"></span> 4 Agents</span>
@@ -1590,6 +2031,12 @@
                                     <span><span class="summary-dot" style="background-color: var(--color-human);"></span> 5 Gates</span>
                                     <span><span class="summary-dot" style="background-color: var(--color-orchestrator);"></span> 1 Orchestrator</span>
                                 </div>
+
+                                <!-- PRIMARY CTA BUTTON FOR "EXPLORE THE ARCHITECTURE" -->
+                                <button class="explore-trigger-pill" onclick="openOverviewPanel()">
+                                    <svg class="icon"><use href="#icon-nodes"/></svg>
+                                    <span>Explore the architecture</span> →
+                                </button>
 
                             </div>
                         </div>
@@ -1600,12 +2047,132 @@
 
         <div class="chapter-break-line"></div>
 
-        <!-- REDESIGNED COMPACT CLOSING PRINCIPLES SECTION -->
+        <!-- CHAPTER 4: WHAT THE PIPELINE PRODUCES (LIGHT GREY) -->
+        <div id="outputs-chapter" class="chapter-section bg-light-grey" data-chapter="4" data-context="What the Pipeline Produces">
+            <div class="container">
+                <section id="outputs-section" class="reveal">
+                    <h2 class="section-label">WHAT THE PIPELINE PRODUCES</h2>
+                    <p class="lead" style="margin-bottom: 0.25rem;">The pipeline doesn't just move through stages.</p>
+                    <p style="margin-bottom: var(--space-md);">It leaves a traceable design record behind.</p>
+
+                    <div class="outputs-phase-grid">
+                        
+                        <div class="output-phase-col">
+                            <div class="output-phase-header">P01 — UNDERSTAND</div>
+                            <div class="output-chips-list">
+                                <div class="output-chip">Knowledge Base</div>
+                                <div class="output-chip">Project Understanding</div>
+                                <div class="output-chip">Project Context</div>
+                                <div class="output-chip">Source Index</div>
+                            </div>
+                        </div>
+
+                        <div class="output-phase-col">
+                            <div class="output-phase-header">P02 — DEFINE</div>
+                            <div class="output-chips-list">
+                                <div class="output-chip">Personas</div>
+                                <div class="output-chip">Pain Points</div>
+                                <div class="output-chip">Problem Definition</div>
+                            </div>
+                        </div>
+
+                        <div class="output-phase-col">
+                            <div class="output-phase-header">P03 — STRATEGIZE</div>
+                            <div class="output-chips-list">
+                                <div class="output-chip">Competitive Analysis</div>
+                                <div class="output-chip">Concept Directions</div>
+                                <div class="output-chip" style="border-color: var(--color-human); color: var(--color-human); font-weight: 500;">Selected Concept</div>
+                                <div class="output-chip">Information Architecture</div>
+                            </div>
+                        </div>
+
+                        <div class="output-phase-col">
+                            <div class="output-phase-header">P04 — DESIGN</div>
+                            <div class="output-chips-list">
+                                <div class="output-chip">User Flows</div>
+                                <div class="output-chip">Feature Decomposition</div>
+                                <div class="output-chip">Experience Blueprint</div>
+                            </div>
+                        </div>
+
+                        <div class="output-phase-col">
+                            <div class="output-phase-header">P05 — REALIZE</div>
+                            <div class="output-chips-list">
+                                <div class="output-chip" style="border-color: var(--color-skills); font-weight: 500;">Interactive Prototype</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="outputs-value-stream">
+                        <span class="v-highlight">EVIDENCE</span>
+                        <span>→</span>
+                        <span class="v-highlight">SYNTHESIS</span>
+                        <span>→</span>
+                        <span class="v-highlight">DECISIONS</span>
+                        <span>→</span>
+                        <span class="v-highlight">EXPERIENCE DEFINITION</span>
+                        <span>→</span>
+                        <span class="v-highlight" style="color: var(--color-skills);">PROTOTYPE</span>
+                    </div>
+
+                    <p style="font-size: 1.1rem; color: var(--text-main); font-weight: 400; text-align: center; margin-top: var(--space-md);">
+                        The prototype is the final visible artifact — but the design reasoning that produced it remains traceable.
+                    </p>
+                </section>
+            </div>
+        </div>
+
+        <div class="chapter-break-line"></div>
+
+        <!-- CHAPTER 5: TESTING THE PIPELINE (PRIMARY WHITE) -->
+        <div id="testing-chapter" class="chapter-section bg-white" data-chapter="5" data-context="Testing the Pipeline">
+            <div class="container">
+                <section id="testing-section" class="reveal">
+                    <h2 class="section-label">TESTING THE PIPELINE</h2>
+                    <p class="lead" style="margin-bottom: 0.25rem;">Testing didn't just validate the pipeline. It changed it.</p>
+                    <p style="margin-bottom: var(--space-md);">Running the pipeline exposed a decision the original architecture didn't explicitly handle.</p>
+
+                    <div class="discovery-grid">
+                        <div class="control-type-card type-gate">
+                            <div class="control-badge-label" style="color: var(--color-human);">HUMAN GATE</div>
+                            <h4 style="font-weight: 500; font-size: 1.1rem; margin-bottom: 4px;">May the work proceed?</h4>
+                            <div class="mono" style="color: var(--color-human); font-size: 0.75rem; margin-bottom: 8px;">APPROVE · REVISE · REJECT</div>
+                            <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">Evaluates whether completed work is ready to progress.</p>
+                        </div>
+
+                        <div class="control-type-card type-decision">
+                            <div class="control-badge-label" style="color: var(--color-skills);">HUMAN DECISION</div>
+                            <h4 style="font-weight: 500; font-size: 1.1rem; margin-bottom: 4px;">Which direction should proceed?</h4>
+                            <div class="mono" style="color: var(--color-skills); font-size: 0.75rem; margin-bottom: 8px;">Concept A · Concept B · Concept C</div>
+                            <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">Selects between valid directions before execution continues.</p>
+                        </div>
+                    </div>
+
+                    <div class="before-after-flow-mini">
+                        <div class="flow-step-box"><span style="color:var(--color-skills);">S07</span> Concept Direction</div>
+                        <span style="color:var(--text-light);">→</span>
+                        <div style="color: var(--text-muted); font-style: italic;">multiple valid concepts</div>
+                        <span style="color:var(--text-light);">→</span>
+                        <div class="flow-step-box human-highlight"><svg class="icon"><use href="#icon-human"/></svg> HUMAN DECISION</div>
+                        <span style="color:var(--text-light);">→</span>
+                        <div class="flow-step-box"><span style="color:var(--color-skills);">S08</span> Information Architecture</div>
+                    </div>
+
+                    <p class="testing-centered-conclusion">
+                        Testing turned an implicit human judgement into an explicit part of the system.
+                    </p>
+                </section>
+            </div>
+        </div>
+
+        <div class="chapter-break-line"></div>
+
+        <!-- CLOSING PRINCIPLES SECTION (LIGHT GREY) -->
         <section class="closing-section-wrapper">
             <div class="container">
                 <div class="closing-container reveal">
                     
-                    <!-- Compact Horizontal Progression Flow -->
                     <div class="principles-horizontal-flow">
                         <div class="principle-node">EVIDENCE</div>
                         <span class="flow-arrow">→</span>
@@ -1618,7 +2185,6 @@
                         <div class="principle-node" style="color: var(--color-human); font-weight: 500;">HUMAN CONTROL</div>
                     </div>
 
-                    <!-- Final Editorial Statement (Controlled Reading Width ~720px) -->
                     <div class="final-editorial-statement">
                         <h3>
                             AI can move the work forward.<br>
@@ -1632,20 +2198,485 @@
 
     </main>
 
+    <!-- FIXED-SIZE STABLE TABBED ARCHITECTURE EXPLORER MODAL -->
+    <div class="modal-overlay" id="overview-modal" onclick="closeOverviewPanel()">
+        <div class="modal-panel" onclick="event.stopPropagation()">
+            <button class="modal-close-btn" onclick="closeOverviewPanel()" aria-label="Close architecture overview">
+                <svg class="icon"><use href="#icon-close"/></svg>
+            </button>
+
+            <!-- Stable Fixed Top Header -->
+            <div class="modal-header-block">
+                <h3 class="modal-title">How the architecture works</h3>
+                <p class="modal-subtitle">Six building blocks turn the UX process into a controlled, executable workflow.</p>
+            </div>
+
+            <!-- Stable Fixed Category Tabs -->
+            <div class="explorer-tabs-nav">
+                <button class="tab-btn active" data-tab="skills" onclick="switchTab('skills', this)">Skills (12)</button>
+                <button class="tab-btn" data-tab="agents" onclick="switchTab('agents', this)">Agents (4)</button>
+                <button class="tab-btn" data-tab="phases" onclick="switchTab('phases', this)">Phases (5)</button>
+                <button class="tab-btn" data-tab="human" onclick="switchTab('human', this)">Human Control</button>
+                <button class="tab-btn" data-tab="orchestrator" onclick="switchTab('orchestrator', this)">Orchestrator</button>
+            </div>
+
+            <!-- Inner Vertically Scrollable Content Area -->
+            <div class="modal-scroll-area">
+                
+                <!-- TAB 1: SKILLS (12) -->
+                <div class="tab-pane active" id="tab-pane-skills">
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>S01 — Knowledge Base Builder</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Organises available project evidence into a structured knowledge base.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">The pipeline needs a shared evidence foundation before interpretation begins.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Creates the evidence base that later Skills can reference and trace back to.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>S02 — Project Understanding</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Builds a structured understanding of the project, its context, goals and known constraints.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">Research and design work need a common understanding of the problem space before synthesis begins.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Establishes project context for downstream research and definition work.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>S03 — Persona Synthesis</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Synthesises available user evidence into evidence-backed personas.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">The pipeline needs a clear representation of who the experience is being designed for.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Creates a user lens for pain-point analysis and later design decisions.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>S04 — Pain Point Extraction</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Identifies and structures recurring user problems from available evidence.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">Raw research needs to become actionable patterns before problems can be defined.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Connects user evidence to the problems the pipeline will address.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>S05 — Problem Definition</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Transforms research findings into clear, solution-neutral problem definitions.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">The pipeline needs to define the problem before generating solutions.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Creates the problem framing that guides strategy and concept development.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>S06 — Competitive Analysis</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Examines relevant products, patterns and approaches for useful references and opportunities.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">The pipeline should understand the surrounding solution landscape before defining its own direction.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Provides external reference points for concept development without replacing user evidence.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>S07 — Concept Direction</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Generates potential experience directions from the defined problems and evidence.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">There may be multiple valid ways to respond to the same problem.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Creates candidate directions for human evaluation before detailed design begins.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-decision-banner">
+                        <div style="font-weight:600; color:var(--color-human); margin-bottom:2px;"><svg class="icon"><use href="#icon-human"/></svg> HUMAN CONCEPT SELECTION</div>
+                        <div style="color:var(--text-muted); font-size:0.78rem;">
+                            Multiple valid concepts may exist. The system should not autonomously decide which product direction is preferable. A human selects the direction that continues into Information Architecture.
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>S08 — Information Architecture</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Defines how the selected experience is organised into meaningful information and structural areas.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">The selected concept needs a coherent structure before interaction flows and features are designed.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Creates the structural foundation for detailed experience design.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>S09 — User Flow</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Defines how users move through key tasks and experience paths.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">Information structure alone does not describe how users accomplish goals.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Turns the architecture into explicit interaction paths.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>S10 — Feature Decomposition</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Breaks the experience into concrete capabilities and features.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">The pipeline needs to translate user flows and problems into implementable product capabilities.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Connects experience intent to the functionality required to support it.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>S11 — Experience Blueprint</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Brings structure, flows, features and experience states together into a coherent design blueprint.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">Prototype creation needs more than isolated screens or feature lists.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Creates the experience specification that guides realization.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>S12 — Prototype Builder</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Transforms the approved experience blueprint into an interactive prototype.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">The pipeline needs a tangible experience that can be reviewed and validated.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Turns the accumulated design decisions into an inspectable experience artifact.</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: AGENTS (4) -->
+                <div class="tab-pane" id="tab-pane-agents">
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>A01 — Research Agent</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Executes the research and problem-definition Skills.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">Early UX activities require a specialised role responsible for turning evidence into structured understanding.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">OWNS / EXECUTES:</span> <span class="skill-q-text">S01 Knowledge Base Builder, S02 Project Understanding, S03 Persona Synthesis, S04 Pain Point Extraction, S05 Problem Definition</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Transforms raw project evidence into a structured understanding of users, problems and context that downstream strategy can use.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>A02 — Strategy Agent</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Executes the strategy Skills that explore the solution landscape and generate experience directions.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">Problem definition and experience design require an explicit strategy layer between them.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">OWNS / EXECUTES:</span> <span class="skill-q-text">S06 Competitive Analysis, S07 Concept Direction, (Human Concept Selection), S08 Information Architecture</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Transforms defined problems into an intentionally selected and structured product direction.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>A03 — Experience Architecture Agent</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Executes the Skills that define how the selected experience behaves.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">A concept and information architecture need to become explicit flows, capabilities and experience states before realization.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">OWNS / EXECUTES:</span> <span class="skill-q-text">S09 User Flow, S10 Feature Decomposition, S11 Experience Blueprint</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Transforms product direction into an implementation-ready experience definition.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>A04 — Design Agent</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">WHAT IT DOES:</span> <span class="skill-q-text">Executes experience realization.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">WHY IT EXISTS:</span> <span class="skill-q-text">The accumulated UX decisions need to become something tangible that humans can inspect and validate.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">OWNS / EXECUTES:</span> <span class="skill-q-text">S12 Prototype Builder</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT ON THE PIPELINE:</span> <span class="skill-q-text">Transforms the approved experience blueprint into the interactive prototype used for validation.</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: PHASES (5) -->
+                <div class="tab-pane" id="tab-pane-phases">
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>P01 — Project Understanding</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">PURPOSE:</span> <span class="skill-q-text">Establish the evidence and project context required by the pipeline.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">EXECUTION:</span> <span class="skill-q-text">A01 Research Agent (S01 Knowledge Base Builder, S02 Project Understanding)</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">ENDS WITH:</span> <span class="skill-q-text">G01 — Project Understanding Review</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT:</span> <span class="skill-q-text">Creates the evidence foundation for subsequent UX work.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>P02 — Research & Definition</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">PURPOSE:</span> <span class="skill-q-text">Understand users, identify pain points and define the problems to solve.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">EXECUTION:</span> <span class="skill-q-text">A01 Research Agent (S03 Persona Synthesis, S04 Pain Point Extraction, S05 Problem Definition)</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">ENDS WITH:</span> <span class="skill-q-text">G02 — Research & Definition Review</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT:</span> <span class="skill-q-text">Turns evidence into a clear, human-reviewed problem definition.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>P03 — Solution Strategy</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">PURPOSE:</span> <span class="skill-q-text">Explore possible directions and establish the selected product structure.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">EXECUTION:</span> <span class="skill-q-text">A02 Strategy Agent (S06 Competitive Analysis, S07 Concept Direction → Human Decision → S08 Information Architecture)</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">ENDS WITH:</span> <span class="skill-q-text">G03 — Solution Strategy Review</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT:</span> <span class="skill-q-text">Turns defined problems into an explicitly selected and reviewed experience direction.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>P04 — Experience Design</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">PURPOSE:</span> <span class="skill-q-text">Define how the selected experience should work.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">EXECUTION:</span> <span class="skill-q-text">A03 Experience Architecture Agent (S09 User Flow, S10 Feature Decomposition, S11 Experience Blueprint)</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">ENDS WITH:</span> <span class="skill-q-text">G04 — Experience Design Review</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT:</span> <span class="skill-q-text">Creates the detailed experience definition required for realization.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <button class="accordion-header">
+                            <span>P05 — Experience Realization</span>
+                            <svg class="icon"><use href="#icon-chevron-down"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="skill-q-block"><span class="skill-q-label">PURPOSE:</span> <span class="skill-q-text">Turn the approved experience definition into something tangible.</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">EXECUTION:</span> <span class="skill-q-text">A04 Design Agent (S12 Prototype Builder)</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">ENDS WITH:</span> <span class="skill-q-text">G05 — Experience Realization Review</span></div>
+                            <div class="skill-q-block"><span class="skill-q-label">IMPACT:</span> <span class="skill-q-text">Produces an interactive artifact that can be inspected and validated.</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: HUMAN CONTROL -->
+                <div class="tab-pane" id="tab-pane-human">
+                    <div style="margin-bottom: var(--space-sm);">
+                        <div style="font-weight: 600; color: var(--color-human); margin-bottom: 4px;">HUMAN DECISION</div>
+                        <p style="font-size: 0.85rem; margin-bottom: 4px;"><strong>WHAT IT DOES:</strong> Selects between multiple valid directions.</p>
+                        <p style="font-size: 0.85rem; margin-bottom: 4px;"><strong>WHY IT EXISTS:</strong> Some choices are product judgement rather than quality checks and should not be autonomously made by the AI system.</p>
+                        <p style="font-size: 0.85rem; margin-bottom: 4px;"><strong>CURRENT INSTANCE:</strong> Concept Selection between S07 and S08.</p>
+                        <p style="font-size: 0.85rem;"><strong>IMPACT:</strong> Prevents the pipeline from silently choosing product direction.</p>
+                    </div>
+
+                    <div style="border-top: 1px solid var(--border-subtle); padding-top: var(--space-sm);">
+                        <div style="font-weight: 600; color: var(--color-human); margin-bottom: 4px;">HUMAN GATES (G01–G05)</div>
+                        <p style="font-size: 0.85rem; margin-bottom: 4px;"><strong>WHAT THEY DO:</strong> Stop automatic progression and require explicit human review.</p>
+                        <p style="font-size: 0.85rem; margin-bottom: 4px;"><strong>WHY THEY EXIST:</strong> AI may execute UX work, but humans remain accountable for whether the work is acceptable to continue.</p>
+                        <p style="font-size: 0.85rem; margin-bottom: 8px;"><strong>AVAILABLE ACTIONS:</strong> APPROVE · REVISE · REJECT</p>
+                        
+                        <div style="font-size:0.8rem; display:flex; flex-direction:column; gap:4px; margin-top:8px;">
+                            <div><strong>G01 — Project Understanding Review:</strong> Reviews P01 before research and definition continue.</div>
+                            <div><strong>G02 — Research & Definition Review:</strong> Reviews personas, pain points and problem definition before strategy begins.</div>
+                            <div><strong>G03 — Solution Strategy Review:</strong> Reviews the selected concept and information architecture before experience design begins.</div>
+                            <div><strong>G04 — Experience Design Review:</strong> Reviews flows, features and experience blueprint before realization begins.</div>
+                            <div><strong>G05 — Experience Realization Review:</strong> Reviews the interactive prototype as the final Design Pipeline artifact.</div>
+                        </div>
+
+                        <div style="margin-top: 12px; padding: 8px; background-color: var(--bg-alt); font-size: 0.8rem;">
+                            <strong>A Gate answers:</strong> “May this work proceed?”<br>
+                            <strong>A Human Decision answers:</strong> “Which valid direction should proceed?”
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 5: ORCHESTRATOR -->
+                <div class="tab-pane" id="tab-pane-orchestrator">
+                    <div style="font-weight: 600; color: var(--color-orchestrator); margin-bottom: 4px;">SYSTEM ORCHESTRATOR</div>
+                    <p style="font-size: 0.85rem; margin-bottom: 4px;"><strong>WHAT IT DOES:</strong> Routes execution through the pipeline.</p>
+                    <p style="font-size: 0.85rem; margin-bottom: 8px;"><strong>WHY IT EXISTS:</strong> Skills, Agents, Phases and Gates define responsibilities, but something still needs to determine what executes next.</p>
+
+                    <p style="font-size: 0.85rem; font-weight:600; margin-bottom: 4px;">RESPONSIBILITIES:</p>
+                    <ul style="font-size: 0.8rem; padding-left: 18px; margin-bottom: 12px; color: var(--text-muted);">
+                        <li>Starts the appropriate Phase</li>
+                        <li>Routes work to the responsible Agent</li>
+                        <li>Ensures Skills execute in the intended sequence</li>
+                        <li>Carries outputs forward as inputs</li>
+                        <li>Stops at Human Decisions</li>
+                        <li>Stops at Human Gates</li>
+                        <li>Routes REVISE outcomes back into the appropriate work</li>
+                        <li>Continues only after human approval</li>
+                    </ul>
+
+                    <p style="font-size: 0.8rem; font-style: italic; margin-bottom: 12px;">The Orchestrator does NOT perform UX work itself. It coordinates the system.</p>
+
+                    <div style="font-family: var(--font-mono); font-size: 0.72rem; text-align: center; padding: 8px; background-color: var(--bg-alt); border: 1px solid var(--border-subtle);">
+                        ORCHESTRATOR → PHASE → AGENT → SKILLS → OUTPUT → HUMAN CONTROL → NEXT PHASE
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Stable Fixed Bottom Footer Area for Pipeline Map -->
+            <div class="modal-footer-area">
+                <button class="map-toggle-btn" onclick="togglePipelineMap()">
+                    <span>VIEW COMPLETE PIPELINE MAP</span>
+                    <svg class="icon" id="map-chevron"><use href="#icon-chevron-down"/></svg>
+                </button>
+
+                <div class="map-expandable-content" id="map-expandable-content">
+                    <div class="map-phase-block">
+                        <div class="map-phase-title">P01 — Project Understanding</div>
+                        <div class="map-agent-sub">A01 — Research Agent</div>
+                        <div class="map-skill-sub">S01 — Knowledge Base Builder</div>
+                        <div class="map-skill-sub">S02 — Project Understanding</div>
+                        <div class="map-gate-sub">G01 — Project Understanding Review</div>
+                    </div>
+
+                    <div class="map-phase-block">
+                        <div class="map-phase-title">P02 — Research & Definition</div>
+                        <div class="map-agent-sub">A01 — Research Agent</div>
+                        <div class="map-skill-sub">S03 — Persona Synthesis</div>
+                        <div class="map-skill-sub">S04 — Pain Point Extraction</div>
+                        <div class="map-skill-sub">S05 — Problem Definition</div>
+                        <div class="map-gate-sub">G02 — Research & Definition Review</div>
+                    </div>
+
+                    <div class="map-phase-block">
+                        <div class="map-phase-title">P03 — Solution Strategy</div>
+                        <div class="map-agent-sub">A02 — Strategy Agent</div>
+                        <div class="map-skill-sub">S06 — Competitive Analysis</div>
+                        <div class="map-skill-sub">S07 — Concept Direction</div>
+                        <div class="map-skill-sub" style="color: var(--color-human); font-weight:600;">Human Concept Selection</div>
+                        <div class="map-skill-sub">S08 — Information Architecture</div>
+                        <div class="map-gate-sub">G03 — Solution Strategy Review</div>
+                    </div>
+
+                    <div class="map-phase-block">
+                        <div class="map-phase-title">P04 — Experience Design</div>
+                        <div class="map-agent-sub">A03 — Experience Architecture Agent</div>
+                        <div class="map-skill-sub">S09 — User Flow</div>
+                        <div class="map-skill-sub">S10 — Feature Decomposition</div>
+                        <div class="map-skill-sub">S11 — Experience Blueprint</div>
+                        <div class="map-gate-sub">G04 — Experience Design Review</div>
+                    </div>
+
+                    <div class="map-phase-block">
+                        <div class="map-phase-title">P05 — Experience Realization</div>
+                        <div class="map-agent-sub">A04 — Design Agent</div>
+                        <div class="map-skill-sub">S12 — Prototype Builder</div>
+                        <div class="map-gate-sub">G05 — Experience Realization Review</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <script>
-        // Mathematical Hero Node Positioning on Exact Path Coordinates via getPointAtLength()
+        // Switch Explorer Tabs
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            
+            btn.classList.add('active');
+            const targetPane = document.getElementById('tab-pane-' + tabId);
+            if (targetPane) {
+                targetPane.classList.add('active');
+            }
+        }
+
+        // Open Overview Modal
+        function openOverviewPanel() {
+            document.getElementById('overview-modal').classList.add('is-open');
+        }
+
+        // Close Overview Modal
+        function closeOverviewPanel() {
+            document.getElementById('overview-modal').classList.remove('is-open');
+        }
+
+        // Toggle Accordion Items
+        function toggleAccordion(item) {
+            const isActive = item.classList.contains('is-active');
+            document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('is-active'));
+            if (!isActive) {
+                item.classList.add('is-active');
+            }
+        }
+
+        // Toggle Expandable Pipeline Map
+        function togglePipelineMap() {
+            const content = document.getElementById('map-expandable-content');
+            const chevron = document.getElementById('map-chevron');
+            if (content) {
+                content.classList.toggle('is-expanded');
+                if (chevron) {
+                    chevron.style.transform = content.classList.contains('is-expanded') ? 'rotate(180deg)' : 'rotate(0deg)';
+                }
+            }
+        }
+
+        // Keyboard ESC Close handling
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeOverviewPanel();
+            }
+        });
+
+        // Mathematical Hero Node Positioning
         function alignHeroMotifNodes() {
             const path = document.getElementById('hero-main-route');
             if (!path) return;
             
             const totalLen = path.getTotalLength();
             
-            // Exact parametric positions along the 240px bezier curve
-            const p1 = path.getPointAtLength(totalLen * 0.15); // Solid Blue
-            const p2 = path.getPointAtLength(totalLen * 0.35); // Yellow
-            const pGate = path.getPointAtLength(totalLen * 0.50); // Green Human Decision Gate
-            const p3 = path.getPointAtLength(totalLen * 0.72); // Purple
-            const p4 = path.getPointAtLength(totalLen * 0.88); // Final Blue
+            const p1 = path.getPointAtLength(totalLen * 0.15);
+            const p2 = path.getPointAtLength(totalLen * 0.35);
+            const pGate = path.getPointAtLength(totalLen * 0.50);
+            const p3 = path.getPointAtLength(totalLen * 0.72);
+            const p4 = path.getPointAtLength(totalLen * 0.88);
 
             const n1 = document.getElementById('hero-node-1');
             const n2 = document.getElementById('hero-node-2');
@@ -1660,7 +2691,6 @@
             if (n4) { n4.setAttribute('cx', p4.x); n4.setAttribute('cy', p4.y); }
         }
 
-        // Initialize hero alignment on DOM load
         window.addEventListener('DOMContentLoaded', alignHeroMotifNodes);
         window.addEventListener('resize', alignHeroMotifNodes);
 
@@ -1737,7 +2767,7 @@
             revealObserver.observe(el);
         });
 
-        // Particle System for Layer Micro-motions and Completion Burst
+        // Particle System for Layer Micro-motions
         const particleOverlay = document.getElementById('particle-overlay');
         const semanticColors = ['#1A73E8', '#EA4335', '#FBBC04', '#34A853', '#8E24AA'];
 
